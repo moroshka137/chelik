@@ -1,0 +1,1920 @@
+<html>
+<head>
+<title>scratch_6.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bababa;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #56a8f5;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+scratch_6.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s2">html</span><span class="s0">&gt;</span>
+<span class="s0">&lt;html </span><span class="s2">lang</span><span class="s3">=&quot;ru&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;head&gt;</span>
+<span class="s0">&lt;meta </span><span class="s2">charset</span><span class="s3">=&quot;UTF-8&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;meta </span><span class="s2">name</span><span class="s3">=&quot;viewport&quot; </span><span class="s2">content</span><span class="s3">=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;meta </span><span class="s2">name</span><span class="s3">=&quot;theme-color&quot; </span><span class="s2">content</span><span class="s3">=&quot;#4a6cf7&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;title&gt;</span><span class="s1">StudyNotes — умные конспекты</span><span class="s0">&lt;/title&gt;</span>
+
+<span class="s0">&lt;script </span><span class="s2">src</span><span class="s3">=&quot;https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js&quot;</span><span class="s0">&gt;&lt;/script&gt;</span>
+<span class="s0">&lt;script </span><span class="s2">type</span><span class="s3">=&quot;module&quot;</span><span class="s0">&gt;</span>
+  <span class="s1">import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';</span>
+  <span class="s1">env.allowLocalModels = false;</span>
+  <span class="s1">env.useBrowserCache = true;</span>
+  <span class="s1">window.__setTransformers &amp;&amp; window.__setTransformers(pipeline);</span>
+<span class="s0">&lt;/script&gt;</span>
+<span class="s0">&lt;script&gt;</span>
+  <span class="s1">window.__transformersReady = new Promise(res =&gt; {</span>
+    <span class="s1">window.__setTransformers = p =&gt; res(p);</span>
+  <span class="s1">});</span>
+<span class="s0">&lt;/script&gt;</span>
+
+<span class="s0">&lt;style&gt;</span>
+  <span class="s1">:root{</span>
+    <span class="s1">--bg:#f4f6fb; --card:#fff; --accent:#4a6cf7; --accent2:#eef1ff;</span>
+    <span class="s1">--text:#1e2233; --muted:#7a819c; --border:#e3e7f2;</span>
+    <span class="s1">--danger:#e94f5a; --ok:#2eb872; --star:#f5a623;</span>
+    <span class="s1">--shadow:0 4px 20px rgba(30,34,51,.08);</span>
+  <span class="s1">}</span>
+  <span class="s1">*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}</span>
+  <span class="s1">html,body{height:100%}</span>
+  <span class="s1">body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);</span>
+       <span class="s1">display:flex;min-height:100dvh;overflow:hidden}</span>
+
+  <span class="s1">/* ============ MASCOT ============ */</span>
+  <span class="s1">.mascot{width:160px;height:auto;display:block;margin:0 auto 12px;</span>
+    <span class="s1">animation:float 3s ease-in-out infinite;</span>
+    <span class="s1">filter:drop-shadow(0 8px 18px rgba(30,34,51,.14))}</span>
+  <span class="s1">.brand-mascot{width:36px;height:36px;flex-shrink:0}</span>
+  <span class="s1">.empty-mascot{width:150px;height:auto;display:block;margin:0 auto 12px;</span>
+    <span class="s1">animation:float 3s ease-in-out infinite}</span>
+  <span class="s1">@keyframes float{</span>
+    <span class="s1">0%,100%{transform:translateY(0) rotate(-1deg)}</span>
+    <span class="s1">50%{transform:translateY(-8px) rotate(1deg)}</span>
+  <span class="s1">}</span>
+
+  <span class="s1">/* Floating companion */</span>
+  <span class="s1">.companion{</span>
+    <span class="s1">position:fixed; right:20px; bottom:20px; z-index:60;</span>
+    <span class="s1">width:90px; height:90px; cursor:grab; touch-action:none;</span>
+    <span class="s1">filter:drop-shadow(0 6px 14px rgba(30,34,51,.2));</span>
+    <span class="s1">transition:transform .2s;</span>
+  <span class="s1">}</span>
+  <span class="s1">.companion:active{cursor:grabbing}</span>
+  <span class="s1">.companion.dragging{transition:none; cursor:grabbing; transform:scale(1.1)}</span>
+  <span class="s1">.companion.speaking{animation:wiggle .5s ease-in-out 2}</span>
+  <span class="s1">@keyframes wiggle{</span>
+    <span class="s1">0%,100%{transform:rotate(0)}</span>
+    <span class="s1">25%{transform:rotate(-10deg) translateY(-4px)}</span>
+    <span class="s1">75%{transform:rotate(10deg) translateY(-4px)}</span>
+  <span class="s1">}</span>
+  <span class="s1">.bubble{</span>
+    <span class="s1">position:fixed; z-index:61; max-width:240px;</span>
+    <span class="s1">background:#fff; border:2px solid var(--accent);</span>
+    <span class="s1">border-radius:14px; padding:10px 14px; font-size:13px;</span>
+    <span class="s1">box-shadow:0 6px 20px rgba(74,108,247,.25);</span>
+    <span class="s1">opacity:0; transform:translateY(10px); pointer-events:none;</span>
+    <span class="s1">transition:.25s; font-weight:500;</span>
+  <span class="s1">}</span>
+  <span class="s1">.bubble.on{opacity:1; transform:translateY(0)}</span>
+  <span class="s1">.bubble::after{</span>
+    <span class="s1">content:''; position:absolute; bottom:-9px; right:24px;</span>
+    <span class="s1">border:8px solid transparent; border-top-color:var(--accent);</span>
+  <span class="s1">}</span>
+
+  <span class="s1">/* ================= LAYOUT ================= */</span>
+  <span class="s1">.app{display:none;width:100%;height:100dvh}</span>
+  <span class="s1">.app.on{display:flex}</span>
+
+  <span class="s1">aside{width:290px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);</span>
+    <span class="s1">padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;transition:transform .25s}</span>
+  <span class="s1">.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:700;</span>
+    <span class="s1">color:var(--accent);margin-bottom:14px}</span>
+  <span class="s1">aside h2{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);</span>
+    <span class="s1">margin:12px 0 6px}</span>
+  <span class="s1">.item{padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;</span>
+    <span class="s1">display:flex;justify-content:space-between;align-items:center;transition:.15s}</span>
+  <span class="s1">.item:hover{background:var(--accent2)}</span>
+  <span class="s1">.item.active{background:var(--accent);color:#fff}</span>
+
+  <span class="s1">.userbox{margin-top:auto;padding-top:14px;border-top:1px solid var(--border);</span>
+    <span class="s1">display:flex;align-items:center;gap:10px;font-size:13px}</span>
+  <span class="s1">.avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;</span>
+    <span class="s1">display:grid;place-items:center;font-weight:700}</span>
+  <span class="s1">.link{color:var(--accent);cursor:pointer;font-size:13px}</span>
+  <span class="s1">.link.danger{color:var(--danger)}</span>
+
+  <span class="s1">main{flex:1;overflow-y:auto;padding:24px;position:relative}</span>
+  <span class="s1">header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;</span>
+    <span class="s1">margin-bottom:20px;flex-wrap:wrap}</span>
+  <span class="s1">header h1{font-size:22px}</span>
+  <span class="s1">.path{font-size:12px;color:var(--muted);margin-top:4px}</span>
+
+  <span class="s1">.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}</span>
+  <span class="s1">.search{padding:9px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;</span>
+    <span class="s1">background:#fff;min-width:180px}</span>
+
+  <span class="s1">.btn{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:8px;</span>
+    <span class="s1">cursor:pointer;font-size:14px;font-weight:600;transition:.15s;</span>
+    <span class="s1">display:inline-flex;align-items:center;gap:6px}</span>
+  <span class="s1">.btn:hover{opacity:.9}</span>
+  <span class="s1">.btn.ghost{background:var(--accent2);color:var(--accent)}</span>
+  <span class="s1">.btn.sm{padding:6px 12px;font-size:12px}</span>
+  <span class="s1">.btn.icon{padding:8px;background:transparent;color:var(--muted)}</span>
+  <span class="s1">.btn.icon:hover{background:var(--accent2);color:var(--accent)}</span>
+  <span class="s1">.btn.icon.on{color:var(--star)}</span>
+  <span class="s1">.btn.danger{background:var(--danger)}</span>
+  <span class="s1">.btn:disabled{opacity:.45;cursor:not-allowed}</span>
+
+  <span class="s1">.note{background:var(--card);border:1px solid var(--border);border-radius:14px;</span>
+    <span class="s1">padding:18px;margin-bottom:14px;box-shadow:var(--shadow);position:relative}</span>
+  <span class="s1">.note h3{font-size:16px;margin-bottom:6px;padding-right:60px}</span>
+  <span class="s1">.note .meta{font-size:12px;color:var(--muted);margin-bottom:10px}</span>
+  <span class="s1">.note .body{font-size:14px;line-height:1.65;word-break:break-word}</span>
+  <span class="s1">.note .body img{max-width:100%;border-radius:8px;margin:8px 0}</span>
+  <span class="s1">.note img{display:block;max-width:100%;border-radius:10px;</span>
+    <span class="s1">border:1px solid var(--border);margin-top:8px}</span>
+  <span class="s1">.note .acts{position:absolute;top:14px;right:14px;display:flex;gap:2px}</span>
+
+  <span class="s1">/* Content styles */</span>
+  <span class="s1">.body table,.editor table{border-collapse:collapse;margin:10px 0;width:100%}</span>
+  <span class="s1">.body td,.body th,.editor td,.editor th{</span>
+    <span class="s1">border:1px solid var(--border);padding:6px 10px;font-size:13px;text-align:left}</span>
+  <span class="s1">.body th,.editor th{background:var(--accent2);font-weight:600}</span>
+  <span class="s1">.body .scheme,.editor .scheme{</span>
+    <span class="s1">display:flex;align-items:center;gap:6px;flex-wrap:wrap;</span>
+    <span class="s1">padding:12px;background:#fafbff;border:1px dashed var(--border);</span>
+    <span class="s1">border-radius:10px;margin:10px 0}</span>
+  <span class="s1">.body .scheme .box,.editor .scheme .box{</span>
+    <span class="s1">padding:8px 14px;border:2px solid var(--accent);border-radius:10px;</span>
+    <span class="s1">background:#fff;font-size:13px;font-weight:600;color:var(--accent)}</span>
+  <span class="s1">.body .scheme .arrow,.editor .scheme .arrow{</span>
+    <span class="s1">color:var(--accent);font-size:20px;font-weight:700}</span>
+
+  <span class="s1">.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}</span>
+  <span class="s1">.tag{background:var(--accent2);color:var(--accent);padding:3px 10px;</span>
+    <span class="s1">border-radius:99px;font-size:11px;font-weight:600}</span>
+
+  <span class="s1">.empty{text-align:center;padding:50px 20px;color:var(--muted);font-size:14px}</span>
+
+  <span class="s1">/* ============ GRAPH ============ */</span>
+  <span class="s1">.graph-wrap{background:#14162a;border-radius:14px;overflow:hidden;</span>
+    <span class="s1">height:calc(100dvh - 130px);position:relative;box-shadow:var(--shadow)}</span>
+  <span class="s1">#graph{display:block;width:100%;height:100%;cursor:grab}</span>
+  <span class="s1">#graph:active{cursor:grabbing}</span>
+  <span class="s1">.graph-hint{position:absolute;bottom:14px;left:14px;color:#8b91b4;font-size:11px;</span>
+    <span class="s1">pointer-events:none;background:rgba(0,0,0,.4);padding:6px 12px;border-radius:99px}</span>
+
+  <span class="s1">/* ============ AUTH ============ */</span>
+  <span class="s1">.auth{display:none;width:100%;height:100dvh;align-items:center;justify-content:center;</span>
+    <span class="s1">padding:20px;background:</span>
+      <span class="s1">radial-gradient(circle at 20% 20%,#e8edff,transparent 50%),</span>
+      <span class="s1">radial-gradient(circle at 80% 80%,#ffeef0,transparent 50%),</span>
+      <span class="s1">var(--bg)}</span>
+  <span class="s1">.auth.on{display:flex}</span>
+  <span class="s1">.auth-card{background:var(--card);border-radius:20px;padding:30px;width:440px;</span>
+    <span class="s1">max-width:100%;box-shadow:0 20px 60px rgba(30,34,51,.15);text-align:center;</span>
+    <span class="s1">max-height:95dvh;overflow-y:auto}</span>
+  <span class="s1">.auth-card h1{font-size:22px;margin-bottom:6px}</span>
+  <span class="s1">.auth-card .sub{color:var(--muted);font-size:13px;margin-bottom:18px}</span>
+  <span class="s1">.auth-card .field{text-align:left;margin-bottom:12px}</span>
+  <span class="s1">.auth-card label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}</span>
+  <span class="s1">.switch{margin-top:16px;font-size:13px;color:var(--muted)}</span>
+  <span class="s1">.switch b{color:var(--accent);cursor:pointer}</span>
+  <span class="s1">.err{color:var(--danger);font-size:13px;min-height:18px;margin-top:6px}</span>
+  <span class="s1">.ok-msg{color:var(--ok);font-size:13px;margin-top:6px}</span>
+
+  <span class="s1">/* ============ MODAL ============ */</span>
+  <span class="s1">.modal-bg{position:fixed;inset:0;background:rgba(20,25,50,.55);display:none;</span>
+    <span class="s1">align-items:center;justify-content:center;z-index:50;padding:16px;backdrop-filter:blur(3px)}</span>
+  <span class="s1">.modal-bg.open{display:flex}</span>
+  <span class="s1">.modal{background:var(--card);width:840px;max-width:100%;max-height:92dvh;</span>
+    <span class="s1">overflow-y:auto;border-radius:16px;padding:22px}</span>
+  <span class="s1">.modal h2{margin-bottom:14px;font-size:18px}</span>
+
+  <span class="s1">.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}</span>
+  <span class="s1">.tab{padding:9px 14px;border-radius:8px;background:var(--accent2);color:var(--accent);</span>
+    <span class="s1">cursor:pointer;font-size:13px;font-weight:600;transition:.15s;user-select:none}</span>
+  <span class="s1">.tab.active{background:var(--accent);color:#fff}</span>
+
+  <span class="s1">.field{margin-bottom:12px}</span>
+  <span class="s1">.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}</span>
+  <span class="s1">input,textarea,select{width:100%;padding:10px;border:1px solid var(--border);</span>
+    <span class="s1">border-radius:8px;font-family:inherit;font-size:14px;background:#fafbff;outline:none}</span>
+  <span class="s1">input:focus,textarea:focus,select:focus{border-color:var(--accent)}</span>
+  <span class="s1">.row{display:flex;gap:10px;flex-wrap:wrap}</span>
+  <span class="s1">.row .field{flex:1;min-width:140px}</span>
+  <span class="s1">.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}</span>
+
+  <span class="s1">.pane{background:#fafbff;border:1px solid var(--border);border-radius:10px;</span>
+    <span class="s1">padding:14px;margin-bottom:12px}</span>
+  <span class="s1">.file-drop{border:2px dashed var(--border);border-radius:10px;padding:22px;</span>
+    <span class="s1">text-align:center;color:var(--muted);cursor:pointer;font-size:14px;transition:.15s}</span>
+  <span class="s1">.file-drop:hover{border-color:var(--accent);color:var(--accent)}</span>
+  <span class="s1">.preview{max-width:100%;border-radius:8px;margin-top:12px;display:none}</span>
+  <span class="s1">.progress{height:8px;background:var(--accent2);border-radius:99px;overflow:hidden;</span>
+    <span class="s1">margin-top:10px;display:none}</span>
+  <span class="s1">.progress &gt; div{height:100%;width:0;background:var(--accent);transition:width .2s}</span>
+
+  <span class="s1">.rec-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;</span>
+    <span class="s1">border-radius:99px;border:none;background:var(--accent);color:#fff;</span>
+    <span class="s1">cursor:pointer;font-size:14px;font-weight:600;margin-right:8px}</span>
+  <span class="s1">.rec-btn.recording{background:var(--danger);animation:pulse 1.2s infinite}</span>
+  <span class="s1">@keyframes pulse{</span>
+    <span class="s1">0%{box-shadow:0 0 0 0 rgba(233,79,90,.55)}</span>
+    <span class="s1">70%{box-shadow:0 0 0 14px rgba(233,79,90,0)}</span>
+    <span class="s1">100%{box-shadow:0 0 0 0 rgba(233,79,90,0)}</span>
+  <span class="s1">}</span>
+  <span class="s1">.interim{font-size:13px;color:var(--muted);font-style:italic;margin-top:10px;min-height:18px}</span>
+
+  <span class="s1">/* Editor */</span>
+  <span class="s1">.editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:6px;</span>
+    <span class="s1">background:#fff;border:1px solid var(--border);border-bottom:none;</span>
+    <span class="s1">border-radius:8px 8px 0 0;align-items:center}</span>
+  <span class="s1">.tb-btn{width:32px;height:32px;border:1px solid var(--border);border-radius:6px;</span>
+    <span class="s1">background:#fff;cursor:pointer;font-size:14px;font-weight:700;</span>
+    <span class="s1">display:inline-flex;align-items:center;justify-content:center;transition:.15s}</span>
+  <span class="s1">.tb-btn:hover{background:var(--accent2);border-color:var(--accent);color:var(--accent)}</span>
+  <span class="s1">.tb-btn.wide{width:auto;padding:0 10px;font-size:12px;font-weight:600}</span>
+  <span class="s1">.tb-sep{width:1px;height:22px;background:var(--border);margin:0 4px}</span>
+  <span class="s1">.editor{min-height:160px;max-height:400px;overflow-y:auto;padding:12px;</span>
+    <span class="s1">border:1px solid var(--border);border-radius:0 0 8px 8px;background:#fafbff;</span>
+    <span class="s1">font-size:14px;line-height:1.6;outline:none}</span>
+  <span class="s1">.editor:focus{background:#fff}</span>
+  <span class="s1">.editor:empty::before{content:attr(data-ph);color:#b0b5cc}</span>
+
+  <span class="s1">/* Canvas */</span>
+  <span class="s1">.canvas-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}</span>
+  <span class="s1">.swatch{width:26px;height:26px;border-radius:50%;border:2px solid transparent;</span>
+    <span class="s1">cursor:pointer;transition:.15s}</span>
+  <span class="s1">.swatch.active{border-color:var(--text);transform:scale(1.15)}</span>
+  <span class="s1">#canvasWrap{overflow:auto;border:1px solid var(--border);border-radius:10px;background:#fff}</span>
+  <span class="s1">#board{display:block;cursor:crosshair;touch-action:none;width:100%;height:auto}</span>
+  <span class="s1">.tool-btn{padding:6px 12px;border-radius:8px;border:1px solid var(--border);</span>
+    <span class="s1">background:#fff;cursor:pointer;font-size:13px;font-weight:600}</span>
+  <span class="s1">.tool-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}</span>
+
+  <span class="s1">.tags-input{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:6px;</span>
+    <span class="s1">border:1px solid var(--border);border-radius:8px;background:#fafbff;min-height:42px}</span>
+  <span class="s1">.tags-input input{border:none;background:transparent;flex:1;min-width:120px;padding:4px}</span>
+  <span class="s1">.tags-input input:focus{outline:none}</span>
+  <span class="s1">.tag-pill{background:var(--accent2);color:var(--accent);padding:4px 8px 4px 10px;</span>
+    <span class="s1">border-radius:99px;font-size:12px;font-weight:600;</span>
+    <span class="s1">display:inline-flex;gap:6px;align-items:center}</span>
+  <span class="s1">.tag-pill b{cursor:pointer;opacity:.6}</span>
+  <span class="s1">.tag-pill b:hover{opacity:1}</span>
+
+  <span class="s1">/* ============ MOBILE ============ */</span>
+  <span class="s1">.burger{display:none;position:fixed;top:12px;left:12px;z-index:40;</span>
+    <span class="s1">background:var(--accent);color:#fff;border:none;width:42px;height:42px;</span>
+    <span class="s1">border-radius:12px;cursor:pointer;font-size:20px;box-shadow:var(--shadow)}</span>
+  <span class="s1">.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:29}</span>
+  <span class="s1">.overlay.on{display:block}</span>
+
+  <span class="s1">@media (max-width:860px){</span>
+    <span class="s1">aside{position:fixed;left:0;top:0;bottom:0;z-index:30;transform:translateX(-100%);</span>
+      <span class="s1">width:270px;box-shadow:4px 0 30px rgba(0,0,0,.15)}</span>
+    <span class="s1">aside.open{transform:translateX(0)}</span>
+    <span class="s1">.burger{display:block}</span>
+    <span class="s1">main{padding:16px;padding-top:66px}</span>
+    <span class="s1">header h1{font-size:19px}</span>
+    <span class="s1">.graph-wrap{height:calc(100dvh - 170px)}</span>
+    <span class="s1">.modal{padding:16px}</span>
+    <span class="s1">.modal-actions .btn{flex:1}</span>
+    <span class="s1">.note{padding:14px}</span>
+    <span class="s1">.note h3{padding-right:80px}</span>
+    <span class="s1">.mascot{width:130px}</span>
+    <span class="s1">.empty-mascot{width:120px}</span>
+    <span class="s1">.companion{width:70px;height:70px;right:12px;bottom:12px}</span>
+  <span class="s1">}</span>
+<span class="s0">&lt;/style&gt;</span>
+<span class="s0">&lt;/head&gt;</span>
+<span class="s0">&lt;body&gt;</span>
+
+<span class="s4">&lt;!-- ================= MASCOT SYMBOL ================= --&gt;</span>
+<span class="s0">&lt;svg </span><span class="s2">width</span><span class="s3">=&quot;0&quot; </span><span class="s2">height</span><span class="s3">=&quot;0&quot; </span><span class="s2">style</span><span class="s3">=&quot;position:absolute&quot; </span><span class="s2">aria-hidden</span><span class="s3">=&quot;true&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;symbol </span><span class="s2">id</span><span class="s3">=&quot;mouse&quot; </span><span class="s2">viewBox</span><span class="s3">=&quot;0 0 240 240&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M164 196 Q218 208 226 162 Q232 122 210 116 Q196 113 193 126 
+             Q190 138 202 141 Q216 145 213 165 Q209 188 166 184 Z&quot;</span>
+          <span class="s2">fill</span><span class="s3">=&quot;#f4b6b6&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot; </span><span class="s2">stroke-linejoin</span><span class="s3">=&quot;round&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M218 130 L207 141 M222 148 L209 154 M221 168 L208 172&quot;</span>
+          <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;3&quot; </span><span class="s2">stroke-linecap</span><span class="s3">=&quot;round&quot; </span><span class="s2">fill</span><span class="s3">=&quot;none&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;66&quot; </span><span class="s2">cy</span><span class="s3">=&quot;62&quot; </span><span class="s2">r</span><span class="s3">=&quot;40&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#8a8580&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;70&quot; </span><span class="s2">cy</span><span class="s3">=&quot;66&quot; </span><span class="s2">rx</span><span class="s3">=&quot;21&quot; </span><span class="s2">ry</span><span class="s3">=&quot;24&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;176&quot; </span><span class="s2">cy</span><span class="s3">=&quot;58&quot; </span><span class="s2">r</span><span class="s3">=&quot;40&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#8a8580&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;180&quot; </span><span class="s2">cy</span><span class="s3">=&quot;62&quot; </span><span class="s2">rx</span><span class="s3">=&quot;21&quot; </span><span class="s2">ry</span><span class="s3">=&quot;24&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M120 46 Q56 56 48 152 Q46 218 120 222 Q194 218 192 152 Q184 56 120 46 Z&quot;</span>
+          <span class="s2">fill</span><span class="s3">=&quot;#8a8580&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot; </span><span class="s2">stroke-linejoin</span><span class="s3">=&quot;round&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;120&quot; </span><span class="s2">cy</span><span class="s3">=&quot;168&quot; </span><span class="s2">rx</span><span class="s3">=&quot;54&quot; </span><span class="s2">ry</span><span class="s3">=&quot;48&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#a8a39d&quot; </span><span class="s2">opacity</span><span class="s3">=&quot;.45&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;98&quot; </span><span class="s2">cy</span><span class="s3">=&quot;72&quot; </span><span class="s2">rx</span><span class="s3">=&quot;20&quot; </span><span class="s2">ry</span><span class="s3">=&quot;10&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#fff&quot; </span><span class="s2">opacity</span><span class="s3">=&quot;.28&quot;</span>
+             <span class="s2">transform</span><span class="s3">=&quot;rotate(-15 98 72)&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;92&quot; </span><span class="s2">cy</span><span class="s3">=&quot;116&quot; </span><span class="s2">r</span><span class="s3">=&quot;23&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#fff&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;148&quot; </span><span class="s2">cy</span><span class="s3">=&quot;116&quot; </span><span class="s2">r</span><span class="s3">=&quot;23&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#fff&quot; </span><span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;99&quot; </span><span class="s2">cy</span><span class="s3">=&quot;120&quot; </span><span class="s2">r</span><span class="s3">=&quot;13&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#2b2430&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;155&quot; </span><span class="s2">cy</span><span class="s3">=&quot;120&quot; </span><span class="s2">r</span><span class="s3">=&quot;13&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#2b2430&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;103&quot; </span><span class="s2">cy</span><span class="s3">=&quot;114&quot; </span><span class="s2">r</span><span class="s3">=&quot;4.5&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#fff&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;159&quot; </span><span class="s2">cy</span><span class="s3">=&quot;114&quot; </span><span class="s2">r</span><span class="s3">=&quot;4.5&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#fff&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;60&quot; </span><span class="s2">cy</span><span class="s3">=&quot;148&quot; </span><span class="s2">r</span><span class="s3">=&quot;11&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot; </span><span class="s2">opacity</span><span class="s3">=&quot;.55&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;circle </span><span class="s2">cx</span><span class="s3">=&quot;180&quot; </span><span class="s2">cy</span><span class="s3">=&quot;148&quot; </span><span class="s2">r</span><span class="s3">=&quot;11&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot; </span><span class="s2">opacity</span><span class="s3">=&quot;.55&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;120&quot; </span><span class="s2">cy</span><span class="s3">=&quot;156&quot; </span><span class="s2">rx</span><span class="s3">=&quot;14&quot; </span><span class="s2">ry</span><span class="s3">=&quot;11&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot;</span>
+             <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M120 167 Q120 180 106 182 M120 167 Q120 180 134 182&quot;</span>
+          <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;3.5&quot; </span><span class="s2">fill</span><span class="s3">=&quot;none&quot; </span><span class="s2">stroke-linecap</span><span class="s3">=&quot;round&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M64 150 L24 140 M64 160 L20 160 M66 170 L26 180&quot;</span>
+          <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;2.5&quot; </span><span class="s2">stroke-linecap</span><span class="s3">=&quot;round&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M176 150 L216 140 M176 160 L220 160 M174 170 L214 180&quot;</span>
+          <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;2.5&quot; </span><span class="s2">stroke-linecap</span><span class="s3">=&quot;round&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;78&quot; </span><span class="s2">cy</span><span class="s3">=&quot;220&quot; </span><span class="s2">rx</span><span class="s3">=&quot;20&quot; </span><span class="s2">ry</span><span class="s3">=&quot;11&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot;</span>
+             <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;ellipse </span><span class="s2">cx</span><span class="s3">=&quot;162&quot; </span><span class="s2">cy</span><span class="s3">=&quot;220&quot; </span><span class="s2">rx</span><span class="s3">=&quot;20&quot; </span><span class="s2">ry</span><span class="s3">=&quot;11&quot; </span><span class="s2">fill</span><span class="s3">=&quot;#f7bdbd&quot;</span>
+             <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;4.5&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;path </span><span class="s2">d</span><span class="s3">=&quot;M70 220 L70 228 M78 220 L78 228 M86 220 L86 228 
+             M154 220 L154 228 M162 220 L162 228 M170 220 L170 228&quot;</span>
+          <span class="s2">stroke</span><span class="s3">=&quot;#2b2430&quot; </span><span class="s2">stroke-width</span><span class="s3">=&quot;2&quot; </span><span class="s2">stroke-linecap</span><span class="s3">=&quot;round&quot; </span><span class="s2">opacity</span><span class="s3">=&quot;.7&quot;</span><span class="s0">/&gt;</span>
+  <span class="s0">&lt;/symbol&gt;</span>
+<span class="s0">&lt;/svg&gt;</span>
+
+<span class="s4">&lt;!-- ================= AUTH ================= --&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;auth on&quot; </span><span class="s2">id</span><span class="s3">=&quot;authScreen&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;auth-card&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;svg </span><span class="s2">class</span><span class="s3">=&quot;mascot&quot; </span><span class="s2">viewBox</span><span class="s3">=&quot;0 0 240 240&quot;</span><span class="s0">&gt;&lt;use </span><span class="s2">href</span><span class="s3">=&quot;#mouse&quot;</span><span class="s0">/&gt;&lt;/svg&gt;</span>
+    <span class="s0">&lt;h1&gt;</span><span class="s1">StudyNotes</span><span class="s0">&lt;/h1&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;sub&quot;</span><span class="s0">&gt;</span><span class="s1">Умные конспекты для школы</span><span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;loginForm&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Логин или Email</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;lLogin&quot; </span><span class="s2">autocomplete</span><span class="s3">=&quot;username&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Пароль</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;lPass&quot; </span><span class="s2">type</span><span class="s3">=&quot;password&quot; </span><span class="s2">autocomplete</span><span class="s3">=&quot;current-password&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;err&quot; </span><span class="s2">id</span><span class="s3">=&quot;lErr&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:100%;margin-top:8px&quot; </span><span class="s2">id</span><span class="s3">=&quot;loginBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Войти</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;switch&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Нет аккаунта? </span><span class="s0">&lt;b </span><span class="s2">id</span><span class="s3">=&quot;toReg&quot;</span><span class="s0">&gt;</span><span class="s1">Зарегистрироваться</span><span class="s0">&lt;/b&gt;&lt;br&gt;</span>
+        <span class="s0">&lt;b </span><span class="s2">id</span><span class="s3">=&quot;toForgot&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:inline-block;margin-top:8px&quot;</span><span class="s0">&gt;</span><span class="s1">Забыли пароль?</span><span class="s0">&lt;/b&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;regForm&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Логин (a-z, 0-9, _)</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;rLogin&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Email</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;rEmail&quot; </span><span class="s2">type</span><span class="s3">=&quot;email&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Пароль (от 4 символов)</span><span class="s0">&lt;/label&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;rPass&quot; </span><span class="s2">type</span><span class="s3">=&quot;password&quot; </span><span class="s2">autocomplete</span><span class="s3">=&quot;new-password&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Повторите пароль</span><span class="s0">&lt;/label&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;rPass2&quot; </span><span class="s2">type</span><span class="s3">=&quot;password&quot; </span><span class="s2">autocomplete</span><span class="s3">=&quot;new-password&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Секретный вопрос (для восстановления)</span><span class="s0">&lt;/label&gt;</span>
+        <span class="s0">&lt;select </span><span class="s2">id</span><span class="s3">=&quot;rQuest&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;option&gt;</span><span class="s1">Девичья фамилия матери</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option&gt;</span><span class="s1">Имя первого питомца</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option&gt;</span><span class="s1">Город рождения</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option&gt;</span><span class="s1">Любимая книга</span><span class="s0">&lt;/option&gt;</span>
+        <span class="s0">&lt;/select&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Ответ</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;rAns&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;err&quot; </span><span class="s2">id</span><span class="s3">=&quot;rErr&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:100%;margin-top:14px&quot; </span><span class="s2">id</span><span class="s3">=&quot;regBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Создать аккаунт</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;switch&quot;</span><span class="s0">&gt;</span><span class="s1">Уже есть аккаунт? </span><span class="s0">&lt;b </span><span class="s2">id</span><span class="s3">=&quot;toLogin&quot;</span><span class="s0">&gt;</span><span class="s1">Войти</span><span class="s0">&lt;/b&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;forgotForm&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Логин или Email</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;fLogin&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn ghost&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:100%;margin-top:6px&quot; </span><span class="s2">id</span><span class="s3">=&quot;findBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Найти аккаунт</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;fStep2&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none;margin-top:14px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label </span><span class="s2">id</span><span class="s3">=&quot;fQuestLabel&quot;</span><span class="s0">&gt;</span><span class="s1">Секретный вопрос</span><span class="s0">&lt;/label&gt;</span>
+          <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;fAns&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Новый пароль</span><span class="s0">&lt;/label&gt;</span>
+          <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;fNewPass&quot; </span><span class="s2">type</span><span class="s3">=&quot;password&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;err&quot; </span><span class="s2">id</span><span class="s3">=&quot;fErr&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;ok-msg&quot; </span><span class="s2">id</span><span class="s3">=&quot;fOk&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:100%;margin-top:14px;display:none&quot; </span><span class="s2">id</span><span class="s3">=&quot;resetBtn&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Сменить пароль</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;switch&quot;</span><span class="s0">&gt;&lt;b </span><span class="s2">id</span><span class="s3">=&quot;toLogin2&quot;</span><span class="s0">&gt;</span><span class="s1">← Вернуться ко входу</span><span class="s0">&lt;/b&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">style</span><span class="s3">=&quot;font-size:11px;color:#b0b5cc;margin-top:18px;line-height:1.5&quot;</span><span class="s0">&gt;</span>
+      <span class="s1">🔒 Данные хранятся локально. Восстановление — через секретный вопрос.</span><span class="s0">&lt;br&gt;</span>
+      <span class="s1">Настоящее письмо на почту требует серверной части.</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+
+<span class="s4">&lt;!-- ================= APP ================= --&gt;</span>
+<span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;burger&quot; </span><span class="s2">id</span><span class="s3">=&quot;burger&quot;</span><span class="s0">&gt;</span><span class="s1">☰</span><span class="s0">&lt;/button&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;overlay&quot; </span><span class="s2">id</span><span class="s3">=&quot;overlay&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+
+<span class="s4">&lt;!-- Companion mascot --&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;companion&quot; </span><span class="s2">id</span><span class="s3">=&quot;companion&quot; </span><span class="s2">title</span><span class="s3">=&quot;Привет! Я твой крысёныш&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;svg </span><span class="s2">viewBox</span><span class="s3">=&quot;0 0 240 240&quot; </span><span class="s2">width</span><span class="s3">=&quot;100%&quot; </span><span class="s2">height</span><span class="s3">=&quot;100%&quot;</span><span class="s0">&gt;&lt;use </span><span class="s2">href</span><span class="s3">=&quot;#mouse&quot;</span><span class="s0">/&gt;&lt;/svg&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;bubble&quot; </span><span class="s2">id</span><span class="s3">=&quot;bubble&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;app&quot; </span><span class="s2">id</span><span class="s3">=&quot;app&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;aside </span><span class="s2">id</span><span class="s3">=&quot;sidebar&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;brand&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;svg </span><span class="s2">class</span><span class="s3">=&quot;brand-mascot&quot; </span><span class="s2">viewBox</span><span class="s3">=&quot;0 0 240 240&quot;</span><span class="s0">&gt;&lt;use </span><span class="s2">href</span><span class="s3">=&quot;#mouse&quot;</span><span class="s0">/&gt;&lt;/svg&gt;</span>
+      <span class="s1">StudyNotes</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Разделы</span><span class="s0">&lt;/h2&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;item active&quot; </span><span class="s2">id</span><span class="s3">=&quot;navNotes&quot;</span><span class="s0">&gt;</span><span class="s1">📘 Мои конспекты</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;item&quot; </span><span class="s2">id</span><span class="s3">=&quot;navFav&quot;</span><span class="s0">&gt;</span><span class="s1">⭐ Избранное</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;item&quot; </span><span class="s2">id</span><span class="s3">=&quot;navGraph&quot;</span><span class="s0">&gt;</span><span class="s1">🕸 Граф связей</span><span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Классы</span><span class="s0">&lt;/h2&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;classes&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Предметы</span><span class="s0">&lt;/h2&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;subjects&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Темы</span><span class="s0">&lt;/h2&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;topics&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Данные</span><span class="s0">&lt;/h2&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;item&quot; </span><span class="s2">id</span><span class="s3">=&quot;navExport&quot;</span><span class="s0">&gt;</span><span class="s1">📤 Экспорт конспектов</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;item&quot; </span><span class="s2">id</span><span class="s3">=&quot;navImport&quot;</span><span class="s0">&gt;</span><span class="s1">📥 Импорт конспектов</span><span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;userbox&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;avatar&quot; </span><span class="s2">id</span><span class="s3">=&quot;avatar&quot;</span><span class="s0">&gt;</span><span class="s1">?</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">style</span><span class="s3">=&quot;flex:1&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;userName&quot; </span><span class="s2">style</span><span class="s3">=&quot;font-weight:600&quot;</span><span class="s0">&gt;</span><span class="s1">—</span><span class="s0">&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;link&quot; </span><span class="s2">id</span><span class="s3">=&quot;logoutBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Выйти</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/aside&gt;</span>
+
+  <span class="s0">&lt;main&gt;</span>
+    <span class="s0">&lt;header&gt;</span>
+      <span class="s0">&lt;div&gt;</span>
+        <span class="s0">&lt;h1 </span><span class="s2">id</span><span class="s3">=&quot;pageTitle&quot;</span><span class="s0">&gt;</span><span class="s1">Мои конспекты</span><span class="s0">&lt;/h1&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;path&quot; </span><span class="s2">id</span><span class="s3">=&quot;pagePath&quot;</span><span class="s0">&gt;</span><span class="s1">—</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;toolbar&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">class</span><span class="s3">=&quot;search&quot; </span><span class="s2">id</span><span class="s3">=&quot;searchInput&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;🔍 Поиск по тексту и тегам&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;addBtn&quot;</span><span class="s0">&gt;</span><span class="s1">+ Конспект</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/header&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;content&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+  <span class="s0">&lt;/main&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+
+<span class="s4">&lt;!-- ================= MODAL ================= --&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;modal-bg&quot; </span><span class="s2">id</span><span class="s3">=&quot;modalBg&quot;</span><span class="s0">&gt;</span>
+  <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;modal&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;h2&gt;</span><span class="s1">Новый конспект</span><span class="s0">&lt;/h2&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;row&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Класс</span><span class="s0">&lt;/label&gt;&lt;select </span><span class="s2">id</span><span class="s3">=&quot;selClass&quot;</span><span class="s0">&gt;&lt;/select&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Предмет</span><span class="s0">&lt;/label&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;inpSubject&quot; </span><span class="s2">list</span><span class="s3">=&quot;subjectList&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;Алгебра&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;datalist </span><span class="s2">id</span><span class="s3">=&quot;subjectList&quot;</span><span class="s0">&gt;&lt;/datalist&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;row&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Тема</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;inpTopic&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;Квадратные уравнения&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;&lt;label&gt;</span><span class="s1">Название параграфа</span><span class="s0">&lt;/label&gt;&lt;input </span><span class="s2">id</span><span class="s3">=&quot;inpTitle&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;Параграф 12&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;label&gt;</span><span class="s1">Теги (Enter, чтобы добавить)</span><span class="s0">&lt;/label&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tags-input&quot; </span><span class="s2">id</span><span class="s3">=&quot;tagsBox&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;tagInput&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;алгебра, формулы, экзамен...&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tabs&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tab active&quot; </span><span class="s2">data-tab</span><span class="s3">=&quot;text&quot;</span><span class="s0">&gt;</span><span class="s1">✍️ Ввод</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tab&quot; </span><span class="s2">data-tab</span><span class="s3">=&quot;file&quot;</span><span class="s0">&gt;</span><span class="s1">📄 Файл</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tab&quot; </span><span class="s2">data-tab</span><span class="s3">=&quot;photo&quot;</span><span class="s0">&gt;</span><span class="s1">📷 Фото → текст</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tab&quot; </span><span class="s2">data-tab</span><span class="s3">=&quot;audio&quot;</span><span class="s0">&gt;</span><span class="s1">🎙️ Аудио → текст</span><span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tab&quot; </span><span class="s2">data-tab</span><span class="s3">=&quot;draw&quot;</span><span class="s0">&gt;</span><span class="s1">🎨 Рисунок</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;pane&quot; </span><span class="s2">id</span><span class="s3">=&quot;pane-text&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">style</span><span class="s3">=&quot;font-size:13px;color:var(--muted)&quot;</span><span class="s0">&gt;</span><span class="s1">Пишите текст и форматируйте его панелью ниже</span><span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;pane&quot; </span><span class="s2">id</span><span class="s3">=&quot;pane-file&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;file-drop&quot; </span><span class="s2">id</span><span class="s3">=&quot;fileDrop&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Нажмите или перетащите .txt / .md файл</span>
+        <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;file&quot; </span><span class="s2">id</span><span class="s3">=&quot;fileInput&quot; </span><span class="s2">accept</span><span class="s3">=&quot;.txt,.md,text/plain&quot; </span><span class="s2">hidden</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;pane&quot; </span><span class="s2">id</span><span class="s3">=&quot;pane-photo&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;file-drop&quot; </span><span class="s2">id</span><span class="s3">=&quot;photoDrop&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">📷 Нажмите или перетащите фото конспекта</span>
+        <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;file&quot; </span><span class="s2">id</span><span class="s3">=&quot;photoInput&quot; </span><span class="s2">accept</span><span class="s3">=&quot;image/*&quot; </span><span class="s2">hidden</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;img </span><span class="s2">id</span><span class="s3">=&quot;photoPreview&quot; </span><span class="s2">class</span><span class="s3">=&quot;preview&quot; </span><span class="s2">alt</span><span class="s3">=&quot;превью&quot;</span><span class="s0">&gt;</span>
+
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;row&quot; </span><span class="s2">style</span><span class="s3">=&quot;margin-top:12px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot; </span><span class="s2">style</span><span class="s3">=&quot;flex:2&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;label&gt;</span><span class="s1">Режим распознавания</span><span class="s0">&lt;/label&gt;</span>
+          <span class="s0">&lt;select </span><span class="s2">id</span><span class="s3">=&quot;ocrMode&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;printed&quot;</span><span class="s0">&gt;</span><span class="s1">📄 Печатный текст (быстро)</span><span class="s0">&lt;/option&gt;</span>
+            <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;handwritten&quot;</span><span class="s0">&gt;</span><span class="s1">✍️ Рукописный текст (медленно, точнее)</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;/select&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;label </span><span class="s2">style</span><span class="s3">=&quot;font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:10px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;checkbox&quot; </span><span class="s2">id</span><span class="s3">=&quot;ocrPreproc&quot; </span><span class="s2">checked style</span><span class="s3">=&quot;width:auto&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">Предобработка (ч/б, контраст, 2x) — сильно улучшает качество</span>
+      <span class="s0">&lt;/label&gt;</span>
+
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;progress&quot; </span><span class="s2">id</span><span class="s3">=&quot;ocrProgress&quot;</span><span class="s0">&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;ocrStatus&quot; </span><span class="s2">style</span><span class="s3">=&quot;font-size:12px;color:var(--muted);margin-top:8px&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;ocrBtn&quot; </span><span class="s2">disabled style</span><span class="s3">=&quot;margin-top:10px&quot;</span><span class="s0">&gt;</span><span class="s1">🧠 Распознать текст</span><span class="s0">&lt;/button&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;pane&quot; </span><span class="s2">id</span><span class="s3">=&quot;pane-audio&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">style</span><span class="s3">=&quot;display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;rec-btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;recBtn&quot;</span><span class="s0">&gt;</span><span class="s1">🎙️ Записать с микрофона</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn ghost&quot; </span><span class="s2">id</span><span class="s3">=&quot;audioFileBtn&quot;</span><span class="s0">&gt;</span><span class="s1">📁 Загрузить аудиофайл</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;file&quot; </span><span class="s2">id</span><span class="s3">=&quot;audioFileInput&quot; </span><span class="s2">accept</span><span class="s3">=&quot;audio/*&quot; </span><span class="s2">hidden</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;interim&quot; </span><span class="s2">id</span><span class="s3">=&quot;interim&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;row&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot; </span><span class="s2">style</span><span class="s3">=&quot;flex:2&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;label&gt;</span><span class="s1">Модель Whisper (для файлов и записей)</span><span class="s0">&lt;/label&gt;</span>
+          <span class="s0">&lt;select </span><span class="s2">id</span><span class="s3">=&quot;whisperModel&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Xenova/whisper-tiny&quot;</span><span class="s0">&gt;</span><span class="s1">Tiny — быстро, ~40 МБ</span><span class="s0">&lt;/option&gt;</span>
+            <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Xenova/whisper-base&quot; </span><span class="s2">selected</span><span class="s0">&gt;</span><span class="s1">Base — баланс, ~150 МБ</span><span class="s0">&lt;/option&gt;</span>
+            <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Xenova/whisper-small&quot;</span><span class="s0">&gt;</span><span class="s1">Small — точнее, ~500 МБ</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;/select&gt;</span>
+        <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;progress&quot; </span><span class="s2">id</span><span class="s3">=&quot;whisperProgress&quot;</span><span class="s0">&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;audioStatus&quot; </span><span class="s2">style</span><span class="s3">=&quot;font-size:12px;color:var(--muted);margin-top:8px&quot;</span><span class="s0">&gt;</span>
+        <span class="s1">💡 Whisper понимает даже плохое качество и шум. Первая загрузка скачает модель.</span>
+      <span class="s0">&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;pane&quot; </span><span class="s2">id</span><span class="s3">=&quot;pane-draw&quot; </span><span class="s2">style</span><span class="s3">=&quot;display:none&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;canvas-tools&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch active&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#1e2233&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#1e2233&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#e94f5a&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#e94f5a&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#4a6cf7&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#4a6cf7&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#2eb872&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#2eb872&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#f5a623&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#f5a623&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;swatch&quot; </span><span class="s2">style</span><span class="s3">=&quot;background:#9b51e0&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#9b51e0&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;range&quot; </span><span class="s2">id</span><span class="s3">=&quot;brushSize&quot; </span><span class="s2">min</span><span class="s3">=&quot;1&quot; </span><span class="s2">max</span><span class="s3">=&quot;30&quot; </span><span class="s2">value</span><span class="s3">=&quot;3&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:100px&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tool-btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;eraserBtn&quot;</span><span class="s0">&gt;</span><span class="s1">🧽 Ластик</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tool-btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;undoBtn&quot;</span><span class="s0">&gt;</span><span class="s1">↶</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tool-btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;clearBtn&quot;</span><span class="s0">&gt;</span><span class="s1">🗑</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tool-btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;dlCanvasBtn&quot;</span><span class="s0">&gt;</span><span class="s1">⬇ Скачать PNG</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;canvasWrap&quot;</span><span class="s0">&gt;&lt;canvas </span><span class="s2">id</span><span class="s3">=&quot;board&quot; </span><span class="s2">width</span><span class="s3">=&quot;820&quot; </span><span class="s2">height</span><span class="s3">=&quot;460&quot;</span><span class="s0">&gt;&lt;/canvas&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;field&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;label&gt;</span><span class="s1">Текст конспекта</span><span class="s0">&lt;/label&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;editor-toolbar&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;select </span><span class="s2">id</span><span class="s3">=&quot;fontFamily&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:130px;padding:4px&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;'Segoe UI',sans-serif&quot;</span><span class="s0">&gt;</span><span class="s1">Без засечек</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Georgia,serif&quot;</span><span class="s0">&gt;</span><span class="s1">С засечками</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;'Times New Roman',serif&quot;</span><span class="s0">&gt;</span><span class="s1">Times New Roman</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Arial,sans-serif&quot;</span><span class="s0">&gt;</span><span class="s1">Arial</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;'Comic Sans MS',cursive&quot;</span><span class="s0">&gt;</span><span class="s1">Comic Sans</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;'Courier New',monospace&quot;</span><span class="s0">&gt;</span><span class="s1">Monospace</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;'Brush Script MT',cursive&quot;</span><span class="s0">&gt;</span><span class="s1">Рукописный</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;Impact,sans-serif&quot;</span><span class="s0">&gt;</span><span class="s1">Заголовок (Impact)</span><span class="s0">&lt;/option&gt;</span>
+        <span class="s0">&lt;/select&gt;</span>
+        <span class="s0">&lt;select </span><span class="s2">id</span><span class="s3">=&quot;fontSize&quot; </span><span class="s2">style</span><span class="s3">=&quot;width:80px;padding:4px&quot;</span><span class="s0">&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;2&quot;</span><span class="s0">&gt;</span><span class="s1">12 px</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;3&quot; </span><span class="s2">selected</span><span class="s0">&gt;</span><span class="s1">14 px</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;4&quot;</span><span class="s0">&gt;</span><span class="s1">16 px</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;5&quot;</span><span class="s0">&gt;</span><span class="s1">18 px</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;6&quot;</span><span class="s0">&gt;</span><span class="s1">24 px</span><span class="s0">&lt;/option&gt;</span>
+          <span class="s0">&lt;option </span><span class="s2">value</span><span class="s3">=&quot;7&quot;</span><span class="s0">&gt;</span><span class="s1">32 px</span><span class="s0">&lt;/option&gt;</span>
+        <span class="s0">&lt;/select&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tb-sep&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;bold&quot; </span><span class="s2">title</span><span class="s3">=&quot;Жирный&quot;</span><span class="s0">&gt;&lt;b&gt;</span><span class="s1">B</span><span class="s0">&lt;/b&gt;&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;italic&quot; </span><span class="s2">title</span><span class="s3">=&quot;Курсив&quot;</span><span class="s0">&gt;&lt;i&gt;</span><span class="s1">I</span><span class="s0">&lt;/i&gt;&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;underline&quot; </span><span class="s2">title</span><span class="s3">=&quot;Подчеркнуть&quot;</span><span class="s0">&gt;&lt;u&gt;</span><span class="s1">U</span><span class="s0">&lt;/u&gt;&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;strikeThrough&quot; </span><span class="s2">title</span><span class="s3">=&quot;Зачеркнуть&quot;</span><span class="s0">&gt;&lt;s&gt;</span><span class="s1">S</span><span class="s0">&lt;/s&gt;&lt;/button&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tb-sep&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#e94f5a&quot; </span><span class="s2">title</span><span class="s3">=&quot;Красный&quot; </span><span class="s2">style</span><span class="s3">=&quot;color:#e94f5a&quot;</span><span class="s0">&gt;</span><span class="s1">A</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#4a6cf7&quot; </span><span class="s2">title</span><span class="s3">=&quot;Синий&quot; </span><span class="s2">style</span><span class="s3">=&quot;color:#4a6cf7&quot;</span><span class="s0">&gt;</span><span class="s1">A</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-color</span><span class="s3">=&quot;#2eb872&quot; </span><span class="s2">title</span><span class="s3">=&quot;Зелёный&quot; </span><span class="s2">style</span><span class="s3">=&quot;color:#2eb872&quot;</span><span class="s0">&gt;</span><span class="s1">A</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tb-sep&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;insertUnorderedList&quot; </span><span class="s2">title</span><span class="s3">=&quot;Список&quot;</span><span class="s0">&gt;</span><span class="s1">•</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn&quot; </span><span class="s2">data-cmd</span><span class="s3">=&quot;insertOrderedList&quot; </span><span class="s2">title</span><span class="s3">=&quot;Нумерация&quot;</span><span class="s0">&gt;</span><span class="s1">1.</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tb-sep&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn wide&quot; </span><span class="s2">id</span><span class="s3">=&quot;btnTable&quot; </span><span class="s2">title</span><span class="s3">=&quot;Вставить таблицу&quot;</span><span class="s0">&gt;</span><span class="s1">▦ Таблица</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn wide&quot; </span><span class="s2">id</span><span class="s3">=&quot;btnScheme&quot; </span><span class="s2">title</span><span class="s3">=&quot;Вставить схему&quot;</span><span class="s0">&gt;</span><span class="s1">→ Схема</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn wide&quot; </span><span class="s2">id</span><span class="s3">=&quot;btnHighlight&quot; </span><span class="s2">title</span><span class="s3">=&quot;Маркер&quot;</span><span class="s0">&gt;</span><span class="s1">🖍 Маркер</span><span class="s0">&lt;/button&gt;</span>
+        <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;tb-sep&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+        <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;tb-btn wide&quot; </span><span class="s2">id</span><span class="s3">=&quot;btnClearFormat&quot;</span><span class="s0">&gt;</span><span class="s1">✕ Формат</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;/div&gt;</span>
+      <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;editor&quot; </span><span class="s2">id</span><span class="s3">=&quot;inpText&quot; </span><span class="s2">contenteditable</span><span class="s3">=&quot;true&quot;</span>
+           <span class="s2">data-ph</span><span class="s3">=&quot;Текст конспекта... Выделите фрагмент и примените стиль сверху&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+
+    <span class="s0">&lt;div </span><span class="s2">class</span><span class="s3">=&quot;modal-actions&quot;</span><span class="s0">&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn ghost&quot; </span><span class="s2">id</span><span class="s3">=&quot;cancelBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Отмена</span><span class="s0">&lt;/button&gt;</span>
+      <span class="s0">&lt;button </span><span class="s2">class</span><span class="s3">=&quot;btn&quot; </span><span class="s2">id</span><span class="s3">=&quot;saveBtn&quot;</span><span class="s0">&gt;</span><span class="s1">Сохранить</span><span class="s0">&lt;/button&gt;</span>
+    <span class="s0">&lt;/div&gt;</span>
+  <span class="s0">&lt;/div&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+
+<span class="s0">&lt;script&gt;</span>
+<span class="s1">/* ============================================================</span>
+   <span class="s1">0. УТИЛИТЫ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const $  = id =&gt; document.getElementById(id);</span>
+<span class="s1">const esc = s =&gt; (s||'').replace(/[&amp;&lt;&gt;&quot;']/g, c =&gt;</span>
+  <span class="s1">({'&amp;':'</span><span class="s5">&amp;amp;</span><span class="s1">','&lt;':'</span><span class="s5">&amp;lt;</span><span class="s1">','&gt;':'</span><span class="s5">&amp;gt;</span><span class="s1">','&quot;':'</span><span class="s5">&amp;quot;</span><span class="s1">',&quot;'&quot;:'</span><span class="s5">&amp;#39;</span><span class="s1">'}[c]));</span>
+
+<span class="s1">async function sha256(str){</span>
+  <span class="s1">const buf = new TextEncoder().encode(str);</span>
+  <span class="s1">const hash = await crypto.subtle.digest('SHA-256', buf);</span>
+  <span class="s1">return [...new Uint8Array(hash)].map(b =&gt; b.toString(16).padStart(2,'0')).join('');</span>
+<span class="s1">}</span>
+
+<span class="s1">function sanitizeHTML(html){</span>
+  <span class="s1">const t = document.createElement('div');</span>
+  <span class="s1">t.innerHTML = html;</span>
+  <span class="s1">t.querySelectorAll('script,style,iframe,object,embed,link,meta').forEach(e =&gt; e.remove());</span>
+  <span class="s1">t.querySelectorAll('*').forEach(el =&gt; {</span>
+    <span class="s1">[...el.attributes].forEach(a =&gt; {</span>
+      <span class="s1">if(/^on/i.test(a.name)) el.removeAttribute(a.name);</span>
+      <span class="s1">if(a.name === 'href' &amp;&amp; /^javascript:/i.test(a.value)) el.removeAttribute(a.name);</span>
+    <span class="s1">});</span>
+  <span class="s1">});</span>
+  <span class="s1">return t.innerHTML;</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">1. АВТОРИЗАЦИЯ + ВОССТАНОВЛЕНИЕ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const USERS_KEY = 'sn_users';</span>
+<span class="s1">const SESSION_KEY = 'sn_session';</span>
+<span class="s1">let CURRENT_USER = null;</span>
+
+<span class="s1">const loadUsers = () =&gt; JSON.parse(localStorage.getItem(USERS_KEY) || '{}');</span>
+<span class="s1">const saveUsers = u =&gt; localStorage.setItem(USERS_KEY, JSON.stringify(u));</span>
+<span class="s1">function dbKey(){ return 'sn_db_' + CURRENT_USER; }</span>
+
+<span class="s1">function showAuthTab(name){</span>
+  <span class="s1">['loginForm','regForm','forgotForm'].forEach(id =&gt; $(id).style.display = 'none');</span>
+  <span class="s1">$(name).style.display = '';</span>
+  <span class="s1">['lErr','rErr','fErr'].forEach(id =&gt; $(id).textContent = '');</span>
+  <span class="s1">$('fOk').textContent = '';</span>
+<span class="s1">}</span>
+
+<span class="s1">async function doRegister(){</span>
+  <span class="s1">const login = $('rLogin').value.trim().toLowerCase();</span>
+  <span class="s1">const email = $('rEmail').value.trim().toLowerCase();</span>
+  <span class="s1">const p1 = $('rPass').value, p2 = $('rPass2').value;</span>
+  <span class="s1">const quest = $('rQuest').value;</span>
+  <span class="s1">const ans = $('rAns').value.trim().toLowerCase();</span>
+  <span class="s1">const err = $('rErr');</span>
+  <span class="s1">err.textContent = '';</span>
+
+  <span class="s1">if(login.length &lt; 3)              return err.textContent = 'Логин минимум 3 символа';</span>
+  <span class="s1">if(!/^[a-z0-9_]+$/.test(login))   return err.textContent = 'Логин: a-z, 0-9, _';</span>
+  <span class="s1">if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err.textContent = 'Введите корректный email';</span>
+  <span class="s1">if(p1.length &lt; 4)                 return err.textContent = 'Пароль минимум 4 символа';</span>
+  <span class="s1">if(p1 !== p2)                     return err.textContent = 'Пароли не совпадают';</span>
+  <span class="s1">if(!ans)                          return err.textContent = 'Введите ответ на секретный вопрос';</span>
+
+  <span class="s1">const users = loadUsers();</span>
+  <span class="s1">if(users[login]) return err.textContent = 'Такой логин уже занят';</span>
+  <span class="s1">if(Object.values(users).some(u =&gt; u.email === email))</span>
+    <span class="s1">return err.textContent = 'Этот email уже используется';</span>
+
+  <span class="s1">users[login] = {</span>
+    <span class="s1">hash: await sha256(p1),</span>
+    <span class="s1">email,</span>
+    <span class="s1">quest,</span>
+    <span class="s1">ansHash: await sha256(ans),</span>
+    <span class="s1">created: Date.now()</span>
+  <span class="s1">};</span>
+  <span class="s1">saveUsers(users);</span>
+  <span class="s1">localStorage.setItem(SESSION_KEY, login);</span>
+  <span class="s1">startSession(login);</span>
+<span class="s1">}</span>
+
+<span class="s1">async function doLogin(){</span>
+  <span class="s1">const raw = $('lLogin').value.trim().toLowerCase();</span>
+  <span class="s1">const pass = $('lPass').value;</span>
+  <span class="s1">const err = $('lErr');</span>
+  <span class="s1">err.textContent = '';</span>
+
+  <span class="s1">const users = loadUsers();</span>
+  <span class="s1">// искать по логину или email</span>
+  <span class="s1">let login = users[raw] ? raw : Object.keys(users).find(k =&gt; users[k].email === raw);</span>
+  <span class="s1">if(!login) return err.textContent = 'Пользователь не найден';</span>
+  <span class="s1">const hash = await sha256(pass);</span>
+  <span class="s1">if(hash !== users[login].hash) return err.textContent = 'Неверный пароль';</span>
+
+  <span class="s1">localStorage.setItem(SESSION_KEY, login);</span>
+  <span class="s1">startSession(login);</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ---- Восстановление пароля ---- */</span>
+<span class="s1">let resetTarget = null;</span>
+
+<span class="s1">$('findBtn').onclick = () =&gt; {</span>
+  <span class="s1">const raw = $('fLogin').value.trim().toLowerCase();</span>
+  <span class="s1">const err = $('fErr'), ok = $('fOk');</span>
+  <span class="s1">err.textContent = ''; ok.textContent = '';</span>
+
+  <span class="s1">const users = loadUsers();</span>
+  <span class="s1">const login = users[raw] ? raw : Object.keys(users).find(k =&gt; users[k].email === raw);</span>
+  <span class="s1">if(!login){</span>
+    <span class="s1">err.textContent = 'Аккаунт не найден';</span>
+    <span class="s1">$('fStep2').style.display = 'none';</span>
+    <span class="s1">$('resetBtn').style.display = 'none';</span>
+    <span class="s1">return;</span>
+  <span class="s1">}</span>
+  <span class="s1">resetTarget = login;</span>
+  <span class="s1">$('fQuestLabel').textContent = users[login].quest;</span>
+  <span class="s1">$('fStep2').style.display = '';</span>
+  <span class="s1">$('resetBtn').style.display = '';</span>
+<span class="s1">};</span>
+
+<span class="s1">$('resetBtn').onclick = async () =&gt; {</span>
+  <span class="s1">const ans = $('fAns').value.trim().toLowerCase();</span>
+  <span class="s1">const np = $('fNewPass').value;</span>
+  <span class="s1">const err = $('fErr'), ok = $('fOk');</span>
+  <span class="s1">err.textContent = ''; ok.textContent = '';</span>
+
+  <span class="s1">if(!resetTarget) return err.textContent = 'Сначала найдите аккаунт';</span>
+  <span class="s1">const users = loadUsers();</span>
+  <span class="s1">const u = users[resetTarget];</span>
+  <span class="s1">if(await sha256(ans) !== u.ansHash) return err.textContent = 'Неверный ответ';</span>
+  <span class="s1">if(np.length &lt; 4) return err.textContent = 'Пароль минимум 4 символа';</span>
+
+  <span class="s1">u.hash = await sha256(np);</span>
+  <span class="s1">saveUsers(users);</span>
+  <span class="s1">ok.textContent = '✅ Пароль изменён. Можете войти.';</span>
+  <span class="s1">$('fStep2').style.display = 'none';</span>
+  <span class="s1">$('resetBtn').style.display = 'none';</span>
+<span class="s1">};</span>
+
+<span class="s1">function startSession(login){</span>
+  <span class="s1">CURRENT_USER = login;</span>
+  <span class="s1">$('authScreen').classList.remove('on');</span>
+  <span class="s1">$('app').classList.add('on');</span>
+  <span class="s1">$('userName').textContent = login;</span>
+  <span class="s1">$('avatar').textContent = login[0].toUpperCase();</span>
+
+  <span class="s1">DB = JSON.parse(localStorage.getItem(dbKey()) || '{}');</span>
+  <span class="s1">cur = { cls:null, subj:null, topic:null, view:'notes', favOnly:false, query:'' };</span>
+  <span class="s1">renderAll();</span>
+  <span class="s1">setTimeout(() =&gt; sayHello(), 800);</span>
+<span class="s1">}</span>
+
+<span class="s1">function logout(){</span>
+  <span class="s1">localStorage.removeItem(SESSION_KEY);</span>
+  <span class="s1">CURRENT_USER = null;</span>
+  <span class="s1">location.reload();</span>
+<span class="s1">}</span>
+
+<span class="s1">$('toReg').onclick    = () =&gt; showAuthTab('regForm');</span>
+<span class="s1">$('toLogin').onclick  = () =&gt; showAuthTab('loginForm');</span>
+<span class="s1">$('toLogin2').onclick = () =&gt; showAuthTab('loginForm');</span>
+<span class="s1">$('toForgot').onclick = () =&gt; showAuthTab('forgotForm');</span>
+<span class="s1">$('loginBtn').onclick = doLogin;</span>
+<span class="s1">$('regBtn').onclick   = doRegister;</span>
+<span class="s1">$('logoutBtn').onclick = logout;</span>
+<span class="s1">[$('lPass')].forEach(i =&gt; i.addEventListener('keydown', e =&gt; {</span>
+  <span class="s1">if(e.key === 'Enter') doLogin();</span>
+<span class="s1">}));</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">2. ХРАНИЛИЩЕ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">let DB = {};</span>
+<span class="s1">const saveDB = () =&gt; localStorage.setItem(dbKey(), JSON.stringify(DB));</span>
+
+<span class="s1">const CLASSES = ['5','6','7','8','9','10','11'];</span>
+<span class="s1">const DEFAULT_SUBJECTS = ['Алгебра','Геометрия','Русский язык','Литература',</span>
+  <span class="s1">'История','Физика','Химия','Биология','География','Английский язык'];</span>
+
+<span class="s1">let cur = { cls:null, subj:null, topic:null, view:'notes', favOnly:false, query:'' };</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">3. САЙДБАР</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">function renderClasses(){</span>
+  <span class="s1">const el = $('classes');</span>
+  <span class="s1">el.innerHTML = CLASSES.map(c =&gt;</span>
+    <span class="s1">`&lt;div class=&quot;item ${cur.cls===c?'active':''}&quot; data-cls=&quot;${c}&quot;&gt;${c} класс&lt;/div&gt;`).join('');</span>
+  <span class="s1">el.querySelectorAll('.item').forEach(i =&gt;</span>
+    <span class="s1">i.onclick = () =&gt; { cur={...cur,cls:i.dataset.cls,subj:null,topic:null,</span>
+      <span class="s1">view:'notes',favOnly:false}; closeSidebar(); renderAll(); });</span>
+<span class="s1">}</span>
+<span class="s1">function renderSubjects(){</span>
+  <span class="s1">const el = $('subjects');</span>
+  <span class="s1">if(!cur.cls){ el.innerHTML = '&lt;div style=&quot;font-size:12px;color:#aaa;padding:4px 12px&quot;&gt;— сначала класс&lt;/div&gt;'; return; }</span>
+  <span class="s1">const subs = [...new Set([...Object.keys(DB[cur.cls]||{}), ...DEFAULT_SUBJECTS])];</span>
+  <span class="s1">el.innerHTML = subs.map(s =&gt;</span>
+    <span class="s1">`&lt;div class=&quot;item ${cur.subj===s?'active':''}&quot; data-s=&quot;${s}&quot;&gt;${s}&lt;/div&gt;`).join('');</span>
+  <span class="s1">el.querySelectorAll('.item').forEach(i =&gt;</span>
+    <span class="s1">i.onclick = () =&gt; { cur={...cur,subj:i.dataset.s,topic:null,view:'notes'};</span>
+      <span class="s1">closeSidebar(); renderAll(); });</span>
+<span class="s1">}</span>
+<span class="s1">function renderTopics(){</span>
+  <span class="s1">const el = $('topics');</span>
+  <span class="s1">if(!cur.cls || !cur.subj){ el.innerHTML = '&lt;div style=&quot;font-size:12px;color:#aaa;padding:4px 12px&quot;&gt;— сначала предмет&lt;/div&gt;'; return; }</span>
+  <span class="s1">const topics = Object.keys((DB[cur.cls]||{})[cur.subj]||{});</span>
+  <span class="s1">if(!topics.length){ el.innerHTML = '&lt;div style=&quot;font-size:12px;color:#aaa;padding:4px 12px&quot;&gt;пусто&lt;/div&gt;'; return; }</span>
+  <span class="s1">el.innerHTML = topics.map(t =&gt;</span>
+    <span class="s1">`&lt;div class=&quot;item ${cur.topic===t?'active':''}&quot; data-t=&quot;${t}&quot;&gt;${t}&lt;/div&gt;`).join('');</span>
+  <span class="s1">el.querySelectorAll('.item').forEach(i =&gt;</span>
+    <span class="s1">i.onclick = () =&gt; { cur={...cur,topic:i.dataset.t,view:'notes'};</span>
+      <span class="s1">closeSidebar(); renderAll(); });</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">4. СБОР КОНСПЕКТОВ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">function collectNotes(filter){</span>
+  <span class="s1">const out = [];</span>
+  <span class="s1">for(const cls of Object.keys(DB)){</span>
+    <span class="s1">for(const subj of Object.keys(DB[cls])){</span>
+      <span class="s1">for(const topic of Object.keys(DB[cls][subj])){</span>
+        <span class="s1">DB[cls][subj][topic].forEach(n =&gt; {</span>
+          <span class="s1">const item = {cls,subj,topic,...n};</span>
+          <span class="s1">if(filter(item)) out.push(item);</span>
+        <span class="s1">});</span>
+      <span class="s1">}</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+  <span class="s1">return out.sort((a,b) =&gt; new Date(b.date) - new Date(a.date));</span>
+<span class="s1">}</span>
+
+<span class="s1">function matchQuery(n, q){</span>
+  <span class="s1">if(!q) return true;</span>
+  <span class="s1">q = q.toLowerCase();</span>
+  <span class="s1">const plain = (n.text||'').replace(/&lt;[^&gt;]+&gt;/g,' ');</span>
+  <span class="s1">return (n.title||'').toLowerCase().includes(q)</span>
+      <span class="s1">|| plain.toLowerCase().includes(q)</span>
+      <span class="s1">|| (n.tags ||[]).some(t =&gt; t.toLowerCase().includes(q))</span>
+      <span class="s1">|| n.topic.toLowerCase().includes(q)</span>
+      <span class="s1">|| n.subj.toLowerCase().includes(q);</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">5. КОНТЕНТ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">function renderContent(){</span>
+  <span class="s1">const content = $('content');</span>
+  <span class="s1">const title = $('pageTitle');</span>
+  <span class="s1">const path  = $('pagePath');</span>
+
+  <span class="s1">if(cur.view === 'graph'){</span>
+    <span class="s1">title.textContent = '🕸 Граф связей';</span>
+    <span class="s1">path.textContent = 'Кликните по узлу, чтобы перейти к конспекту';</span>
+    <span class="s1">content.innerHTML = `</span>
+      <span class="s1">&lt;div class=&quot;graph-wrap&quot;&gt;</span>
+        <span class="s1">&lt;canvas id=&quot;graph&quot;&gt;&lt;/canvas&gt;</span>
+        <span class="s1">&lt;div class=&quot;graph-hint&quot;&gt;🖱 тянуть — перемещать · колесо — зум · клик по узлу — открыть&lt;/div&gt;</span>
+      <span class="s1">&lt;/div&gt;`;</span>
+    <span class="s1">initGraph();</span>
+    <span class="s1">return;</span>
+  <span class="s1">}</span>
+
+  <span class="s1">if(cur.view === 'favorites' || cur.favOnly){</span>
+    <span class="s1">title.textContent = '⭐ Избранное';</span>
+    <span class="s1">path.textContent = 'Ваши лучшие конспекты';</span>
+    <span class="s1">const list = collectNotes(n =&gt; n.fav);</span>
+    <span class="s1">content.innerHTML = list.length ? list.map(renderNoteCard).join('')</span>
+      <span class="s1">: emptyHTML('Пока ничего в избранном','Жмите ⭐ на карточке');</span>
+    <span class="s1">bindNoteActions();</span>
+    <span class="s1">return;</span>
+  <span class="s1">}</span>
+
+  <span class="s1">if(cur.cls &amp;&amp; cur.subj &amp;&amp; cur.topic){</span>
+    <span class="s1">title.textContent = cur.topic;</span>
+    <span class="s1">path.textContent = `${cur.cls} класс · ${cur.subj}`;</span>
+    <span class="s1">let notes = (DB[cur.cls]?.[cur.subj]?.[cur.topic] || []);</span>
+    <span class="s1">if(cur.query) notes = notes.filter(n =&gt;</span>
+      <span class="s1">matchQuery({...n, topic:cur.topic, subj:cur.subj}, cur.query));</span>
+    <span class="s1">content.innerHTML = notes.length</span>
+      <span class="s1">? notes.map(n =&gt; renderNoteCard({cls:cur.cls,subj:cur.subj,topic:cur.topic,...n})).join('')</span>
+      <span class="s1">: emptyHTML('Здесь пока пусто','Нажмите «+ Конспект»');</span>
+    <span class="s1">bindNoteActions();</span>
+    <span class="s1">return;</span>
+  <span class="s1">}</span>
+
+  <span class="s1">if(cur.query){</span>
+    <span class="s1">title.textContent = `🔍 «${cur.query}»`;</span>
+    <span class="s1">const list = collectNotes(n =&gt; matchQuery(n, cur.query));</span>
+    <span class="s1">path.textContent = `Найдено: ${list.length}`;</span>
+    <span class="s1">content.innerHTML = list.length ? list.map(renderNoteCard).join('')</span>
+      <span class="s1">: emptyHTML('Ничего не найдено','Попробуйте другой запрос');</span>
+    <span class="s1">bindNoteActions();</span>
+    <span class="s1">return;</span>
+  <span class="s1">}</span>
+
+  <span class="s1">title.textContent = 'Мои конспекты';</span>
+  <span class="s1">path.textContent = 'Выберите класс, предмет или тему слева';</span>
+  <span class="s1">const all = collectNotes(() =&gt; true);</span>
+  <span class="s1">if(!all.length){</span>
+    <span class="s1">content.innerHTML = emptyHTML('Ещё нет конспектов',</span>
+      <span class="s1">'Нажмите «+ Конспект» или откройте граф связей');</span>
+  <span class="s1">} else {</span>
+    <span class="s1">content.innerHTML = `&lt;div style=&quot;font-size:13px;color:var(--muted);margin-bottom:12px&quot;&gt;</span>
+        <span class="s1">Всего: &lt;b&gt;${all.length}&lt;/b&gt; · Обновите фильтр слева или ищите через поиск</span>
+      <span class="s1">&lt;/div&gt;${all.slice(0,30).map(renderNoteCard).join('')}`;</span>
+  <span class="s1">}</span>
+  <span class="s1">bindNoteActions();</span>
+<span class="s1">}</span>
+
+<span class="s1">function emptyHTML(title, sub){</span>
+  <span class="s1">return `&lt;div class=&quot;empty&quot;&gt;</span>
+    <span class="s1">&lt;svg class=&quot;empty-mascot&quot; viewBox=&quot;0 0 240 240&quot;&gt;&lt;use href=&quot;#mouse&quot;/&gt;&lt;/svg&gt;</span>
+    <span class="s1">&lt;div style=&quot;font-weight:600;color:var(--text);margin-bottom:6px&quot;&gt;${title}&lt;/div&gt;</span>
+    <span class="s1">&lt;div&gt;${sub}&lt;/div&gt;</span>
+  <span class="s1">&lt;/div&gt;`;</span>
+<span class="s1">}</span>
+
+<span class="s1">function renderNoteCard(n){</span>
+  <span class="s1">const isHTML = /&lt;[a-z][\s\S]*&gt;/i.test(n.text || '');</span>
+  <span class="s1">const body = isHTML ? sanitizeHTML(n.text) : esc(n.text || '').replace(/\n/g,'&lt;br&gt;');</span>
+  <span class="s1">return `</span>
+  <span class="s1">&lt;div class=&quot;note&quot; data-id=&quot;${n.id}&quot; data-cls=&quot;${n.cls}&quot; data-subj=&quot;${esc(n.subj)}&quot; data-topic=&quot;${esc(n.topic)}&quot;&gt;</span>
+    <span class="s1">&lt;div class=&quot;acts&quot;&gt;</span>
+      <span class="s1">&lt;button class=&quot;btn icon fav ${n.fav?'on':''}&quot; title=&quot;В избранное&quot;&gt;${n.fav?'⭐':'☆'}&lt;/button&gt;</span>
+      <span class="s1">&lt;button class=&quot;btn icon del&quot; title=&quot;Удалить&quot;&gt;🗑&lt;/button&gt;</span>
+    <span class="s1">&lt;/div&gt;</span>
+    <span class="s1">&lt;h3&gt;${esc(n.title)}&lt;/h3&gt;</span>
+    <span class="s1">&lt;div class=&quot;meta&quot;&gt;${new Date(n.date).toLocaleString('ru-RU')} · ${esc(n.cls)} кл · ${esc(n.subj)} · ${esc(n.topic)}&lt;/div&gt;</span>
+    <span class="s1">${n.text ? `&lt;div class=&quot;body&quot;&gt;${body}&lt;/div&gt;` : ''}</span>
+    <span class="s1">${n.image ? `&lt;img src=&quot;${n.image}&quot; alt=&quot;рисунок&quot;&gt;` : ''}</span>
+    <span class="s1">${n.image ? `&lt;button class=&quot;btn ghost sm dl-img&quot; style=&quot;margin-top:8px&quot;&gt;⬇ Скачать рисунок&lt;/button&gt;` : ''}</span>
+    <span class="s1">${(n.tags?.length) ? `&lt;div class=&quot;tags&quot;&gt;${n.tags.map(t =&gt;</span>
+      <span class="s1">`&lt;span class=&quot;tag&quot;&gt;#${esc(t)}&lt;/span&gt;`).join('')}&lt;/div&gt;` : ''}</span>
+  <span class="s1">&lt;/div&gt;`;</span>
+<span class="s1">}</span>
+
+<span class="s1">function bindNoteActions(){</span>
+  <span class="s1">document.querySelectorAll('.note').forEach(card =&gt; {</span>
+    <span class="s1">const id = +card.dataset.id;</span>
+    <span class="s1">const {cls,subj,topic} = card.dataset;</span>
+    <span class="s1">const note = DB[cls]?.[subj]?.[topic]?.find(x =&gt; x.id === id);</span>
+    <span class="s1">if(!note) return;</span>
+
+    <span class="s1">card.querySelector('.fav')?.addEventListener('click', e =&gt; {</span>
+      <span class="s1">e.stopPropagation(); note.fav = !note.fav; saveDB(); renderContent();</span>
+    <span class="s1">});</span>
+
+    <span class="s1">card.querySelector('.del')?.addEventListener('click', e =&gt; {</span>
+      <span class="s1">e.stopPropagation();</span>
+      <span class="s1">if(!confirm('Удалить конспект?')) return;</span>
+      <span class="s1">DB[cls][subj][topic] = DB[cls][subj][topic].filter(x =&gt; x.id !== id);</span>
+      <span class="s1">if(!DB[cls][subj][topic].length) delete DB[cls][subj][topic];</span>
+      <span class="s1">if(!Object.keys(DB[cls][subj] || {}).length) delete DB[cls][subj];</span>
+      <span class="s1">saveDB(); renderAll();</span>
+    <span class="s1">});</span>
+
+    <span class="s1">card.querySelector('.dl-img')?.addEventListener('click', () =&gt; {</span>
+      <span class="s1">const a = document.createElement('a');</span>
+      <span class="s1">a.href = note.image;</span>
+      <span class="s1">a.download = `${note.title.replace(/\s+/g,'_')}_${id}.png`;</span>
+      <span class="s1">a.click();</span>
+    <span class="s1">});</span>
+  <span class="s1">});</span>
+<span class="s1">}</span>
+
+<span class="s1">function renderAll(){</span>
+  <span class="s1">renderClasses(); renderSubjects(); renderTopics(); renderContent();</span>
+  <span class="s1">$('navNotes').classList.toggle('active', cur.view === 'notes' &amp;&amp; !cur.favOnly);</span>
+  <span class="s1">$('navFav').classList.toggle('active',   cur.view === 'favorites' || cur.favOnly);</span>
+  <span class="s1">$('navGraph').classList.toggle('active', cur.view === 'graph');</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">6. ГРАФ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">let graphState = null;</span>
+
+<span class="s1">function initGraph(){</span>
+  <span class="s1">const canvas = $('graph');</span>
+  <span class="s1">if(!canvas) return;</span>
+  <span class="s1">const wrap = canvas.parentElement;</span>
+  <span class="s1">const dpr = devicePixelRatio || 1;</span>
+  <span class="s1">canvas.width  = wrap.clientWidth  * dpr;</span>
+  <span class="s1">canvas.height = wrap.clientHeight * dpr;</span>
+  <span class="s1">const ctx = canvas.getContext('2d');</span>
+  <span class="s1">ctx.scale(dpr, dpr);</span>
+
+  <span class="s1">const nodes = [], byId = {}, links = [];</span>
+  <span class="s1">const add = (id,label,type,meta={}) =&gt; {</span>
+    <span class="s1">if(byId[id]) return byId[id];</span>
+    <span class="s1">const n = { id, label, type, ...meta,</span>
+      <span class="s1">x: Math.random()*wrap.clientWidth, y: Math.random()*wrap.clientHeight,</span>
+      <span class="s1">vx:0, vy:0, r: type==='note'?5 : type==='topic'?9 : type==='subject'?13 : 18 };</span>
+    <span class="s1">nodes.push(n); byId[id] = n; return n;</span>
+  <span class="s1">};</span>
+  <span class="s1">const link = (a,b) =&gt; links.push({a: byId[a], b: byId[b]});</span>
+
+  <span class="s1">for(const cls of Object.keys(DB)){</span>
+    <span class="s1">add('c:'+cls, cls+' класс', 'class');</span>
+    <span class="s1">for(const subj of Object.keys(DB[cls])){</span>
+      <span class="s1">add('s:'+cls+':'+subj, subj, 'subject', {cls,subj});</span>
+      <span class="s1">link('c:'+cls, 's:'+cls+':'+subj);</span>
+      <span class="s1">for(const topic of Object.keys(DB[cls][subj])){</span>
+        <span class="s1">add('t:'+cls+':'+subj+':'+topic, topic, 'topic', {cls,subj,topic});</span>
+        <span class="s1">link('s:'+cls+':'+subj, 't:'+cls+':'+subj+':'+topic);</span>
+        <span class="s1">for(const n of DB[cls][subj][topic]){</span>
+          <span class="s1">add('n:'+n.id, n.title, 'note', {cls,subj,topic,id:n.id});</span>
+          <span class="s1">link('t:'+cls+':'+subj+':'+topic, 'n:'+n.id);</span>
+          <span class="s1">(n.tags||[]).forEach(tag =&gt; {</span>
+            <span class="s1">add('tag:'+tag, '#'+tag, 'tag');</span>
+            <span class="s1">link('n:'+n.id, 'tag:'+tag);</span>
+          <span class="s1">});</span>
+        <span class="s1">}</span>
+      <span class="s1">}</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+
+  <span class="s1">const W = wrap.clientWidth, H = wrap.clientHeight;</span>
+  <span class="s1">let scale = 1, offsetX = 0, offsetY = 0;</span>
+
+  <span class="s1">function tick(){</span>
+    <span class="s1">for(let i=0;i&lt;nodes.length;i++){</span>
+      <span class="s1">for(let j=i+1;j&lt;nodes.length;j++){</span>
+        <span class="s1">const a=nodes[i], b=nodes[j];</span>
+        <span class="s1">const dx=b.x-a.x, dy=b.y-a.y;</span>
+        <span class="s1">const d2 = dx*dx+dy*dy || 1;</span>
+        <span class="s1">if(d2 &gt; 40000) continue;</span>
+        <span class="s1">const d = Math.sqrt(d2), f = 400/d2;</span>
+        <span class="s1">const fx = dx/d*f, fy = dy/d*f;</span>
+        <span class="s1">a.vx -= fx; a.vy -= fy; b.vx += fx; b.vy += fy;</span>
+      <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s1">for(const l of links){</span>
+      <span class="s1">const dx = l.b.x-l.a.x, dy = l.b.y-l.a.y;</span>
+      <span class="s1">const d = Math.hypot(dx,dy) || 1;</span>
+      <span class="s1">const f = (d - 90) * 0.008;</span>
+      <span class="s1">const fx = dx/d*f, fy = dy/d*f;</span>
+      <span class="s1">l.a.vx += fx; l.a.vy += fy; l.b.vx -= fx; l.b.vy -= fy;</span>
+    <span class="s1">}</span>
+    <span class="s1">for(const n of nodes){</span>
+      <span class="s1">n.vx += (W/2 - n.x) * 0.0008;</span>
+      <span class="s1">n.vy += (H/2 - n.y) * 0.0008;</span>
+      <span class="s1">n.vx *= 0.86; n.vy *= 0.86;</span>
+      <span class="s1">n.x += n.vx; n.y += n.vy;</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+
+  <span class="s1">function draw(){</span>
+    <span class="s1">ctx.clearRect(0,0,W,H);</span>
+    <span class="s1">ctx.save();</span>
+    <span class="s1">ctx.translate(offsetX, offsetY);</span>
+    <span class="s1">ctx.scale(scale, scale);</span>
+    <span class="s1">ctx.strokeStyle = 'rgba(140,150,200,.22)';</span>
+    <span class="s1">ctx.lineWidth = 1;</span>
+    <span class="s1">for(const l of links){</span>
+      <span class="s1">ctx.beginPath(); ctx.moveTo(l.a.x, l.a.y); ctx.lineTo(l.b.x, l.b.y); ctx.stroke();</span>
+    <span class="s1">}</span>
+    <span class="s1">const colors = { class:'#ffffff', subject:'#a8b4ff', topic:'#8ea2ff',</span>
+                     <span class="s1">note:'#cfd5f5', tag:'#ffc48a' };</span>
+    <span class="s1">for(const n of nodes){</span>
+      <span class="s1">const isHover = graphState.hover === n;</span>
+      <span class="s1">ctx.beginPath();</span>
+      <span class="s1">ctx.arc(n.x, n.y, n.r + (isHover?3:0), 0, Math.PI*2);</span>
+      <span class="s1">ctx.fillStyle = colors[n.type] || '#ccc';</span>
+      <span class="s1">ctx.fill();</span>
+      <span class="s1">if(isHover){ ctx.strokeStyle = '#4a6cf7'; ctx.lineWidth = 2; ctx.stroke(); }</span>
+    <span class="s1">}</span>
+    <span class="s1">ctx.font = '12px system-ui,sans-serif';</span>
+    <span class="s1">ctx.fillStyle = 'rgba(220,225,255,.75)';</span>
+    <span class="s1">for(const n of nodes){</span>
+      <span class="s1">if(n.r &lt; 9 &amp;&amp; scale &lt; 1.4 &amp;&amp; graphState.hover !== n) continue;</span>
+      <span class="s1">ctx.fillText(n.label, n.x + n.r + 5, n.y + 4);</span>
+    <span class="s1">}</span>
+    <span class="s1">ctx.restore();</span>
+  <span class="s1">}</span>
+
+  <span class="s1">function loop(){ tick(); draw(); requestAnimationFrame(loop); }</span>
+  <span class="s1">let dragging=null, panning=false, lastX=0, lastY=0, downX=0, downY=0;</span>
+  <span class="s1">const toWorld = e =&gt; {</span>
+    <span class="s1">const r = canvas.getBoundingClientRect();</span>
+    <span class="s1">return { x:(e.clientX - r.left - offsetX)/scale, y:(e.clientY - r.top - offsetY)/scale };</span>
+  <span class="s1">};</span>
+  <span class="s1">const pick = p =&gt; {</span>
+    <span class="s1">for(let i=nodes.length-1;i&gt;=0;i--){</span>
+      <span class="s1">const n = nodes[i];</span>
+      <span class="s1">if(Math.hypot(n.x-p.x, n.y-p.y) &lt; n.r + 6) return n;</span>
+    <span class="s1">}</span>
+    <span class="s1">return null;</span>
+  <span class="s1">};</span>
+
+  <span class="s1">canvas.addEventListener('mousedown', e =&gt; {</span>
+    <span class="s1">downX = e.clientX; downY = e.clientY;</span>
+    <span class="s1">const p = toWorld(e), n = pick(p);</span>
+    <span class="s1">if(n){ dragging = n; } else { panning = true; lastX = e.clientX; lastY = e.clientY; }</span>
+  <span class="s1">});</span>
+  <span class="s1">canvas.addEventListener('mousemove', e =&gt; {</span>
+    <span class="s1">const p = toWorld(e), hit = pick(p);</span>
+    <span class="s1">graphState.hover = hit;</span>
+    <span class="s1">canvas.style.cursor = hit ? 'pointer' : (panning ? 'grabbing' : 'grab');</span>
+    <span class="s1">if(dragging){ dragging.x = p.x; dragging.y = p.y; dragging.vx = dragging.vy = 0; }</span>
+    <span class="s1">else if(panning){</span>
+      <span class="s1">offsetX += e.clientX - lastX; offsetY += e.clientY - lastY;</span>
+      <span class="s1">lastX = e.clientX; lastY = e.clientY;</span>
+    <span class="s1">}</span>
+  <span class="s1">});</span>
+  <span class="s1">window.addEventListener('mouseup', e =&gt; {</span>
+    <span class="s1">if(dragging &amp;&amp; Math.hypot(e.clientX-downX, e.clientY-downY) &lt; 4) openNode(dragging);</span>
+    <span class="s1">dragging = null; panning = false;</span>
+  <span class="s1">});</span>
+  <span class="s1">canvas.addEventListener('wheel', e =&gt; {</span>
+    <span class="s1">e.preventDefault();</span>
+    <span class="s1">scale = Math.max(0.35, Math.min(3, scale * (e.deltaY &lt; 0 ? 1.12 : 0.89)));</span>
+  <span class="s1">}, {passive:false});</span>
+
+  <span class="s1">let pinch = null;</span>
+  <span class="s1">canvas.addEventListener('touchstart', e =&gt; {</span>
+    <span class="s1">if(e.touches.length === 2){</span>
+      <span class="s1">const [a,b] = e.touches;</span>
+      <span class="s1">pinch = { d: Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY), s: scale };</span>
+    <span class="s1">} else if(e.touches.length === 1){</span>
+      <span class="s1">const t = e.touches[0], p = toWorld(t), n = pick(p);</span>
+      <span class="s1">if(n) dragging = n; else { panning = true; lastX = t.clientX; lastY = t.clientY; }</span>
+    <span class="s1">}</span>
+  <span class="s1">}, {passive:true});</span>
+  <span class="s1">canvas.addEventListener('touchmove', e =&gt; {</span>
+    <span class="s1">if(e.touches.length === 2 &amp;&amp; pinch){</span>
+      <span class="s1">const [a,b] = e.touches;</span>
+      <span class="s1">const d = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);</span>
+      <span class="s1">scale = Math.max(0.35, Math.min(3, pinch.s * d / pinch.d));</span>
+    <span class="s1">} else if(e.touches.length === 1){</span>
+      <span class="s1">const t = e.touches[0];</span>
+      <span class="s1">if(dragging){ const p = toWorld(t); dragging.x = p.x; dragging.y = p.y; }</span>
+      <span class="s1">else if(panning){</span>
+        <span class="s1">offsetX += t.clientX - lastX; offsetY += t.clientY - lastY;</span>
+        <span class="s1">lastX = t.clientX; lastY = t.clientY;</span>
+      <span class="s1">}</span>
+    <span class="s1">}</span>
+  <span class="s1">}, {passive:true});</span>
+  <span class="s1">canvas.addEventListener('touchend', () =&gt; { dragging=null; panning=false; pinch=null; });</span>
+
+  <span class="s1">graphState = { hover:null };</span>
+  <span class="s1">loop();</span>
+<span class="s1">}</span>
+
+<span class="s1">function openNode(n){</span>
+  <span class="s1">if(n.type === 'note' || n.type === 'topic')</span>
+    <span class="s1">cur = {...cur, cls:n.cls, subj:n.subj, topic:n.topic, view:'notes', favOnly:false};</span>
+  <span class="s1">else if(n.type === 'subject')</span>
+    <span class="s1">cur = {...cur, cls:n.cls, subj:n.subj, topic:null, view:'notes', favOnly:false};</span>
+  <span class="s1">else if(n.type === 'class')</span>
+    <span class="s1">cur = {...cur, cls:n.id.slice(2), subj:null, topic:null, view:'notes', favOnly:false};</span>
+  <span class="s1">else {</span>
+    <span class="s1">cur = {...cur, query:n.label.replace(/^#/,''), view:'notes', favOnly:false};</span>
+    <span class="s1">$('searchInput').value = cur.query;</span>
+  <span class="s1">}</span>
+  <span class="s1">renderAll();</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">7. МОБИЛЬНОЕ МЕНЮ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const sidebar = $('sidebar'), overlay = $('overlay');</span>
+<span class="s1">$('burger').onclick = () =&gt; { sidebar.classList.add('open'); overlay.classList.add('on'); };</span>
+<span class="s1">overlay.onclick = closeSidebar;</span>
+<span class="s1">function closeSidebar(){ sidebar.classList.remove('open'); overlay.classList.remove('on'); }</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">8. НАВИГАЦИЯ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">$('navNotes').onclick = () =&gt; { cur = {...cur, view:'notes', favOnly:false}; closeSidebar(); renderAll(); };</span>
+<span class="s1">$('navFav').onclick   = () =&gt; { cur = {...cur, view:'favorites', favOnly:true}; closeSidebar(); renderAll(); };</span>
+<span class="s1">$('navGraph').onclick = () =&gt; { cur = {...cur, view:'graph'}; closeSidebar(); renderAll(); };</span>
+<span class="s1">$('searchInput').oninput = e =&gt; {</span>
+  <span class="s1">cur.query = e.target.value.trim(); cur.view='notes'; renderContent();</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ---- Экспорт / импорт ---- */</span>
+<span class="s1">$('navExport').onclick = () =&gt; {</span>
+  <span class="s1">const data = JSON.stringify(DB, null, 2);</span>
+  <span class="s1">const blob = new Blob([data], {type:'application/json'});</span>
+  <span class="s1">const a = document.createElement('a');</span>
+  <span class="s1">a.href = URL.createObjectURL(blob);</span>
+  <span class="s1">a.download = `studynotes_${CURRENT_USER}_${Date.now()}.json`;</span>
+  <span class="s1">a.click();</span>
+  <span class="s1">closeSidebar();</span>
+  <span class="s1">bubbleSay('Экспортировал! Отправь файл другу 📤');</span>
+<span class="s1">};</span>
+
+<span class="s1">$('navImport').onclick = () =&gt; {</span>
+  <span class="s1">const input = document.createElement('input');</span>
+  <span class="s1">input.type = 'file';</span>
+  <span class="s1">input.accept = '.json,application/json';</span>
+  <span class="s1">input.onchange = e =&gt; {</span>
+    <span class="s1">const f = e.target.files[0]; if(!f) return;</span>
+    <span class="s1">const r = new FileReader();</span>
+    <span class="s1">r.onload = () =&gt; {</span>
+      <span class="s1">try {</span>
+        <span class="s1">const imported = JSON.parse(r.result);</span>
+        <span class="s1">const mode = confirm(</span>
+          <span class="s1">'OK — объединить с текущими конспектами\n' +</span>
+          <span class="s1">'Отмена — заменить всё текущее');</span>
+        <span class="s1">if(mode) mergeDB(imported); else DB = imported;</span>
+        <span class="s1">saveDB(); renderAll();</span>
+        <span class="s1">bubbleSay('Импортировал! 🎉');</span>
+      <span class="s1">} catch(err){ alert('Ошибка файла: ' + err.message); }</span>
+    <span class="s1">};</span>
+    <span class="s1">r.readAsText(f);</span>
+  <span class="s1">};</span>
+  <span class="s1">input.click();</span>
+  <span class="s1">closeSidebar();</span>
+<span class="s1">};</span>
+
+<span class="s1">function mergeDB(other){</span>
+  <span class="s1">for(const cls of Object.keys(other)){</span>
+    <span class="s1">DB[cls] ??= {};</span>
+    <span class="s1">for(const subj of Object.keys(other[cls])){</span>
+      <span class="s1">DB[cls][subj] ??= {};</span>
+      <span class="s1">for(const topic of Object.keys(other[cls][subj])){</span>
+        <span class="s1">DB[cls][subj][topic] ??= [];</span>
+        <span class="s1">const existing = new Set(DB[cls][subj][topic].map(n =&gt; n.id));</span>
+        <span class="s1">other[cls][subj][topic].forEach(n =&gt; {</span>
+          <span class="s1">if(!existing.has(n.id)) DB[cls][subj][topic].push(n);</span>
+        <span class="s1">});</span>
+      <span class="s1">}</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">9. КРЫСА-КОМПАНЬОН</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const companion = $('companion');</span>
+<span class="s1">const bubble = $('bubble');</span>
+<span class="s1">let bubbleTimer = null;</span>
+
+<span class="s1">const TIPS = [</span>
+  <span class="s1">'Не забудь сохранить конспект!',</span>
+  <span class="s1">'Используй теги — потом легче искать 🔍',</span>
+  <span class="s1">'Попробуй граф связей — красиво! 🕸',</span>
+  <span class="s1">'Запиши аудио — Whisper всё расшифрует 🎙️',</span>
+  <span class="s1">'Жми ⭐ — лучшие конспекты в избранном',</span>
+  <span class="s1">'Таблицы и схемы делают конспект понятнее!',</span>
+  <span class="s1">'Рукописный текст? Выбери режим TrOCR ✍️',</span>
+  <span class="s1">'Я всегда рядом, если что — кликни!',</span>
+  <span class="s1">'Можно экспортировать конспекты и поделиться 📤',</span>
+  <span class="s1">'Разные шрифты помогают выделить главное 🎨'</span>
+<span class="s1">];</span>
+
+<span class="s1">function bubbleSay(text, ms = 3000){</span>
+  <span class="s1">const rect = companion.getBoundingClientRect();</span>
+  <span class="s1">bubble.textContent = text;</span>
+  <span class="s1">bubble.style.left = Math.max(10, rect.left - 200) + 'px';</span>
+  <span class="s1">bubble.style.top  = (rect.top - 60) + 'px';</span>
+  <span class="s1">bubble.classList.add('on');</span>
+  <span class="s1">companion.classList.add('speaking');</span>
+  <span class="s1">clearTimeout(bubbleTimer);</span>
+  <span class="s1">bubbleTimer = setTimeout(() =&gt; {</span>
+    <span class="s1">bubble.classList.remove('on');</span>
+    <span class="s1">companion.classList.remove('speaking');</span>
+  <span class="s1">}, ms);</span>
+<span class="s1">}</span>
+
+<span class="s1">function sayHello(){</span>
+  <span class="s1">const users = loadUsers();</span>
+  <span class="s1">const created = users[CURRENT_USER]?.created;</span>
+  <span class="s1">const isNew = created &amp;&amp; (Date.now() - created &lt; 60000);</span>
+  <span class="s1">bubbleSay(isNew ? 'Привет! Я твой крысёныш 🐭' : 'С возвращением! 🐭', 4000);</span>
+<span class="s1">}</span>
+
+<span class="s1">/* --- Перетаскивание --- */</span>
+<span class="s1">(function makeDraggable(){</span>
+  <span class="s1">let dragging = false, moved = false;</span>
+  <span class="s1">let startX = 0, startY = 0, origLeft = 0, origTop = 0;</span>
+
+  <span class="s1">function start(e){</span>
+    <span class="s1">const t = e.touches ? e.touches[0] : e;</span>
+    <span class="s1">const rect = companion.getBoundingClientRect();</span>
+    <span class="s1">dragging = true; moved = false;</span>
+    <span class="s1">startX = t.clientX; startY = t.clientY;</span>
+    <span class="s1">origLeft = rect.left; origTop = rect.top;</span>
+    <span class="s1">companion.classList.add('dragging');</span>
+    <span class="s1">companion.style.left = origLeft + 'px';</span>
+    <span class="s1">companion.style.top  = origTop + 'px';</span>
+    <span class="s1">companion.style.right = 'auto';</span>
+    <span class="s1">companion.style.bottom = 'auto';</span>
+    <span class="s1">e.preventDefault();</span>
+  <span class="s1">}</span>
+  <span class="s1">function move(e){</span>
+    <span class="s1">if(!dragging) return;</span>
+    <span class="s1">const t = e.touches ? e.touches[0] : e;</span>
+    <span class="s1">const dx = t.clientX - startX, dy = t.clientY - startY;</span>
+    <span class="s1">if(Math.abs(dx) + Math.abs(dy) &gt; 4) moved = true;</span>
+    <span class="s1">const nl = Math.max(0, Math.min(window.innerWidth - 90, origLeft + dx));</span>
+    <span class="s1">const nt = Math.max(0, Math.min(window.innerHeight - 90, origTop + dy));</span>
+    <span class="s1">companion.style.left = nl + 'px';</span>
+    <span class="s1">companion.style.top  = nt + 'px';</span>
+  <span class="s1">}</span>
+  <span class="s1">function end(){</span>
+    <span class="s1">if(!dragging) return;</span>
+    <span class="s1">dragging = false;</span>
+    <span class="s1">companion.classList.remove('dragging');</span>
+    <span class="s1">if(!moved){</span>
+      <span class="s1">bubbleSay(TIPS[Math.floor(Math.random()*TIPS.length)]);</span>
+    <span class="s1">}</span>
+  <span class="s1">}</span>
+  <span class="s1">companion.addEventListener('mousedown', start);</span>
+  <span class="s1">companion.addEventListener('touchstart', start, {passive:false});</span>
+  <span class="s1">window.addEventListener('mousemove', move);</span>
+  <span class="s1">window.addEventListener('touchmove', move, {passive:false});</span>
+  <span class="s1">window.addEventListener('mouseup', end);</span>
+  <span class="s1">window.addEventListener('touchend', end);</span>
+<span class="s1">})();</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">10. РИСОВАНИЕ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">class Board {</span>
+  <span class="s1">constructor(canvas){</span>
+    <span class="s1">this.c = canvas; this.ctx = canvas.getContext('2d');</span>
+    <span class="s1">this.color = '#1e2233'; this.size = 3; this.eraser = false;</span>
+    <span class="s1">this.drawing = false; this.history = []; this.hasContent = false;</span>
+    <span class="s1">this.reset(); this.bind();</span>
+  <span class="s1">}</span>
+  <span class="s1">reset(){</span>
+    <span class="s1">const {ctx,c} = this;</span>
+    <span class="s1">ctx.fillStyle = '#fff'; ctx.fillRect(0,0,c.width,c.height);</span>
+    <span class="s1">ctx.lineCap = 'round'; ctx.lineJoin = 'round';</span>
+    <span class="s1">this.history = [c.toDataURL()]; this.hasContent = false;</span>
+  <span class="s1">}</span>
+  <span class="s1">snapshot(){</span>
+    <span class="s1">this.history.push(this.c.toDataURL());</span>
+    <span class="s1">if(this.history.length &gt; 30) this.history.shift();</span>
+  <span class="s1">}</span>
+  <span class="s1">undo(){</span>
+    <span class="s1">if(this.history.length &lt;= 1) return;</span>
+    <span class="s1">this.history.pop();</span>
+    <span class="s1">const img = new Image();</span>
+    <span class="s1">img.onload = () =&gt; {</span>
+      <span class="s1">const {ctx,c} = this;</span>
+      <span class="s1">ctx.fillStyle = '#fff'; ctx.fillRect(0,0,c.width,c.height);</span>
+      <span class="s1">ctx.drawImage(img,0,0);</span>
+    <span class="s1">};</span>
+    <span class="s1">img.src = this.history[this.history.length-1];</span>
+  <span class="s1">}</span>
+  <span class="s1">pos(e){</span>
+    <span class="s1">const r = this.c.getBoundingClientRect();</span>
+    <span class="s1">const p = e.touches ? e.touches[0] : e;</span>
+    <span class="s1">return {</span>
+      <span class="s1">x: (p.clientX - r.left) * (this.c.width  / r.width),</span>
+      <span class="s1">y: (p.clientY - r.top ) * (this.c.height / r.height)</span>
+    <span class="s1">};</span>
+  <span class="s1">}</span>
+  <span class="s1">start(e){ e.preventDefault(); this.drawing = true;</span>
+    <span class="s1">const p = this.pos(e); this.ctx.beginPath(); this.ctx.moveTo(p.x, p.y); }</span>
+  <span class="s1">move(e){</span>
+    <span class="s1">if(!this.drawing) return; e.preventDefault();</span>
+    <span class="s1">const p = this.pos(e);</span>
+    <span class="s1">this.ctx.strokeStyle = this.eraser ? '#fff' : this.color;</span>
+    <span class="s1">this.ctx.lineWidth = this.eraser ? this.size*4 : this.size;</span>
+    <span class="s1">this.ctx.lineTo(p.x, p.y); this.ctx.stroke();</span>
+    <span class="s1">this.hasContent = true;</span>
+  <span class="s1">}</span>
+  <span class="s1">end(){ if(!this.drawing) return; this.drawing = false; this.snapshot(); }</span>
+  <span class="s1">bind(){</span>
+    <span class="s1">const c = this.c;</span>
+    <span class="s1">c.addEventListener('mousedown', e =&gt; this.start(e));</span>
+    <span class="s1">c.addEventListener('mousemove', e =&gt; this.move(e));</span>
+    <span class="s1">window.addEventListener('mouseup', () =&gt; this.end());</span>
+    <span class="s1">c.addEventListener('mouseleave', () =&gt; this.end());</span>
+    <span class="s1">c.addEventListener('touchstart', e =&gt; this.start(e), {passive:false});</span>
+    <span class="s1">c.addEventListener('touchmove',  e =&gt; this.move(e),  {passive:false});</span>
+    <span class="s1">c.addEventListener('touchend',   () =&gt; this.end());</span>
+  <span class="s1">}</span>
+  <span class="s1">toDataURL(){ return this.hasContent ? this.c.toDataURL('image/png') : null; }</span>
+<span class="s1">}</span>
+
+<span class="s1">const board = new Board($('board'));</span>
+
+<span class="s1">document.querySelectorAll('.swatch').forEach(sw =&gt; sw.onclick = () =&gt; {</span>
+  <span class="s1">document.querySelectorAll('.swatch').forEach(x =&gt; x.classList.remove('active'));</span>
+  <span class="s1">sw.classList.add('active');</span>
+  <span class="s1">board.color = sw.dataset.color; board.eraser = false;</span>
+  <span class="s1">$('eraserBtn').classList.remove('active');</span>
+<span class="s1">});</span>
+<span class="s1">$('brushSize').oninput = e =&gt; board.size = +e.target.value;</span>
+<span class="s1">$('eraserBtn').onclick = e =&gt; {</span>
+  <span class="s1">board.eraser = !board.eraser;</span>
+  <span class="s1">e.target.classList.toggle('active', board.eraser);</span>
+<span class="s1">};</span>
+<span class="s1">$('undoBtn').onclick  = () =&gt; board.undo();</span>
+<span class="s1">$('clearBtn').onclick = () =&gt; board.reset();</span>
+<span class="s1">$('dlCanvasBtn').onclick = () =&gt; {</span>
+  <span class="s1">if(!board.hasContent) return alert('Нарисуйте что-нибудь сначала');</span>
+  <span class="s1">const a = document.createElement('a');</span>
+  <span class="s1">a.href = board.c.toDataURL('image/png');</span>
+  <span class="s1">a.download = 'рисунок_' + Date.now() + '.png';</span>
+  <span class="s1">a.click();</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">11. ТЕГИ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">let pendingTags = [];</span>
+<span class="s1">function renderTags(){</span>
+  <span class="s1">const box = $('tagsBox');</span>
+  <span class="s1">box.querySelectorAll('.tag-pill').forEach(x =&gt; x.remove());</span>
+  <span class="s1">pendingTags.forEach(t =&gt; {</span>
+    <span class="s1">const pill = document.createElement('span');</span>
+    <span class="s1">pill.className = 'tag-pill';</span>
+    <span class="s1">pill.innerHTML = '#' + esc(t) + ' &lt;b&gt;✕&lt;/b&gt;';</span>
+    <span class="s1">pill.querySelector('b').onclick = () =&gt; {</span>
+      <span class="s1">pendingTags = pendingTags.filter(x =&gt; x !== t); renderTags();</span>
+    <span class="s1">};</span>
+    <span class="s1">box.insertBefore(pill, $('tagInput'));</span>
+  <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s1">$('tagInput').addEventListener('keydown', e =&gt; {</span>
+  <span class="s1">if(e.key === 'Enter' || e.key === ','){</span>
+    <span class="s1">e.preventDefault();</span>
+    <span class="s1">const v = e.target.value.trim().replace(/^#/,'').toLowerCase();</span>
+    <span class="s1">if(v &amp;&amp; !pendingTags.includes(v) &amp;&amp; pendingTags.length &lt; 10){</span>
+      <span class="s1">pendingTags.push(v); renderTags();</span>
+    <span class="s1">}</span>
+    <span class="s1">e.target.value = '';</span>
+  <span class="s1">}</span>
+  <span class="s1">if(e.key === 'Backspace' &amp;&amp; !e.target.value &amp;&amp; pendingTags.length){</span>
+    <span class="s1">pendingTags.pop(); renderTags();</span>
+  <span class="s1">}</span>
+<span class="s1">});</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">12. РЕДАКТОР (форматирование)</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">function exec(cmd, val){</span>
+  <span class="s1">document.execCommand(cmd, false, val || null);</span>
+  <span class="s1">$('inpText').focus();</span>
+<span class="s1">}</span>
+
+<span class="s1">document.querySelectorAll('.tb-btn[data-cmd]').forEach(b =&gt;</span>
+  <span class="s1">b.onclick = () =&gt; exec(b.dataset.cmd));</span>
+<span class="s1">document.querySelectorAll('.tb-btn[data-color]').forEach(b =&gt;</span>
+  <span class="s1">b.onclick = () =&gt; exec('foreColor', b.dataset.color));</span>
+
+<span class="s1">$('fontFamily').onchange = e =&gt; exec('fontName', e.target.value);</span>
+<span class="s1">$('fontSize').onchange   = e =&gt; exec('fontSize', e.target.value);</span>
+
+<span class="s1">$('btnClearFormat').onclick = () =&gt; {</span>
+  <span class="s1">exec('removeFormat');</span>
+<span class="s1">};</span>
+
+<span class="s1">$('btnHighlight').onclick = () =&gt; {</span>
+  <span class="s1">const colors = ['#fff3a3','#c8f7c5','#cfe3ff','#ffd6e0','#ffe4b3'];</span>
+  <span class="s1">const pick = prompt('Цвет маркера (hex):\n' + colors.join(', '), '#fff3a3');</span>
+  <span class="s1">if(pick){</span>
+    <span class="s1">// подсветка через inline стиль</span>
+    <span class="s1">document.execCommand('hiliteColor', false, pick);</span>
+  <span class="s1">}</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ---- Вставка таблицы ---- */</span>
+<span class="s1">$('btnTable').onclick = () =&gt; {</span>
+  <span class="s1">const rows = parseInt(prompt('Сколько строк?', '3'), 10);</span>
+  <span class="s1">const cols = parseInt(prompt('Сколько столбцов?', '3'), 10);</span>
+  <span class="s1">if(!rows || !cols || rows &lt; 1 || cols &lt; 1 || rows &gt; 20 || cols &gt; 10) return;</span>
+  <span class="s1">let html = '&lt;table&gt;&lt;thead&gt;&lt;tr&gt;';</span>
+  <span class="s1">for(let c=0;c&lt;cols;c++) html += `&lt;th&gt;Столбец ${c+1}&lt;/th&gt;`;</span>
+  <span class="s1">html += '&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;';</span>
+  <span class="s1">for(let r=0;r&lt;rows;r++){</span>
+    <span class="s1">html += '&lt;tr&gt;';</span>
+    <span class="s1">for(let c=0;c&lt;cols;c++) html += '&lt;td&gt;</span><span class="s5">&amp;nbsp;</span><span class="s1">&lt;/td&gt;';</span>
+    <span class="s1">html += '&lt;/tr&gt;';</span>
+  <span class="s1">}</span>
+  <span class="s1">html += '&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;';</span>
+  <span class="s1">insertHTML(html);</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ---- Вставка схемы ---- */</span>
+<span class="s1">$('btnScheme').onclick = () =&gt; {</span>
+  <span class="s1">const raw = prompt(</span>
+    <span class="s1">'Введите блоки схемы через → (стрелку) или через запятую:\n' +</span>
+    <span class="s1">'Пример: Начало → Шаг 1 → Шаг 2 → Конец',</span>
+    <span class="s1">'Начало → Шаг 1 → Шаг 2 → Конец');</span>
+  <span class="s1">if(!raw) return;</span>
+  <span class="s1">const blocks = raw.split(/→|-&gt;|,/).map(s =&gt; s.trim()).filter(Boolean);</span>
+  <span class="s1">if(!blocks.length) return;</span>
+  <span class="s1">let html = '&lt;div class=&quot;scheme&quot;&gt;';</span>
+  <span class="s1">blocks.forEach((b, i) =&gt; {</span>
+    <span class="s1">html += `&lt;span class=&quot;box&quot;&gt;${esc(b)}&lt;/span&gt;`;</span>
+    <span class="s1">if(i &lt; blocks.length-1) html += '&lt;span class=&quot;arrow&quot;&gt;→&lt;/span&gt;';</span>
+  <span class="s1">});</span>
+  <span class="s1">html += '&lt;/div&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;';</span>
+  <span class="s1">insertHTML(html);</span>
+<span class="s1">};</span>
+
+<span class="s1">function insertHTML(html){</span>
+  <span class="s1">const editor = $('inpText');</span>
+  <span class="s1">editor.focus();</span>
+  <span class="s1">// если есть выделение — заменяем, иначе вставляем в каретку</span>
+  <span class="s1">if(document.queryCommandSupported('insertHTML')){</span>
+    <span class="s1">document.execCommand('insertHTML', false, html);</span>
+  <span class="s1">} else {</span>
+    <span class="s1">const sel = window.getSelection();</span>
+    <span class="s1">if(!sel.rangeCount) return;</span>
+    <span class="s1">const range = sel.getRangeAt(0);</span>
+    <span class="s1">range.deleteContents();</span>
+    <span class="s1">const frag = range.createContextualFragment(html);</span>
+    <span class="s1">range.insertNode(frag);</span>
+  <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">13. МОДАЛКА</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const modal = $('modalBg');</span>
+
+<span class="s1">function switchTab(name){</span>
+  <span class="s1">document.querySelectorAll('.tab').forEach(t =&gt;</span>
+    <span class="s1">t.classList.toggle('active', t.dataset.tab === name));</span>
+  <span class="s1">['text','file','photo','audio','draw'].forEach(k =&gt; {</span>
+    <span class="s1">$('pane-' + k).style.display = (k === name) ? '' : 'none';</span>
+  <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s1">document.querySelectorAll('.tab').forEach(t =&gt; t.onclick = () =&gt; switchTab(t.dataset.tab));</span>
+
+<span class="s1">function openModal(){</span>
+  <span class="s1">const selClass = $('selClass');</span>
+  <span class="s1">selClass.innerHTML = CLASSES.map(c =&gt; `&lt;option&gt;${c}&lt;/option&gt;`).join('');</span>
+  <span class="s1">if(cur.cls) selClass.value = cur.cls;</span>
+
+  <span class="s1">const subs = [...new Set([...DEFAULT_SUBJECTS, ...Object.keys(DB[cur.cls] || {})])];</span>
+  <span class="s1">$('subjectList').innerHTML = subs.map(s =&gt; `&lt;option value=&quot;${s}&quot;&gt;`).join('');</span>
+  <span class="s1">$('inpSubject').value = cur.subj || '';</span>
+  <span class="s1">$('inpTopic').value   = cur.topic || '';</span>
+  <span class="s1">$('inpTitle').value   = '';</span>
+  <span class="s1">$('inpText').innerHTML = '';</span>
+  <span class="s1">$('interim').textContent = '';</span>
+  <span class="s1">$('ocrStatus').textContent = '';</span>
+  <span class="s1">$('audioStatus').textContent = '💡 Whisper понимает даже плохое качество и шум.';</span>
+  <span class="s1">$('photoPreview').style.display = 'none';</span>
+  <span class="s1">$('photoPreview').src = '';</span>
+  <span class="s1">$('ocrBtn').disabled = true;</span>
+  <span class="s1">$('ocrProgress').style.display = 'none';</span>
+  <span class="s1">$('whisperProgress').style.display = 'none';</span>
+  <span class="s1">$('fileDrop').innerHTML = 'Нажмите или перетащите .txt / .md файл&lt;input type=&quot;file&quot; id=&quot;fileInput&quot; accept=&quot;.txt,.md,text/plain&quot; hidden&gt;';</span>
+  <span class="s1">const fi = $('fileInput');</span>
+  <span class="s1">fi.onchange = e =&gt; e.target.files[0] &amp;&amp; readTextFile(e.target.files[0]);</span>
+  <span class="s1">$('fileDrop').onclick = () =&gt; fi.click();</span>
+
+  <span class="s1">pendingTags = []; renderTags();</span>
+  <span class="s1">board.reset();</span>
+  <span class="s1">switchTab('text');</span>
+  <span class="s1">modal.classList.add('open');</span>
+<span class="s1">}</span>
+<span class="s1">function closeModal(){ modal.classList.remove('open'); stopRecognition(); }</span>
+<span class="s1">$('addBtn').onclick    = openModal;</span>
+<span class="s1">$('cancelBtn').onclick = closeModal;</span>
+<span class="s1">modal.onclick = e =&gt; { if(e.target === modal) closeModal(); };</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">14. ФАЙЛ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const fileDrop = $('fileDrop');</span>
+<span class="s1">fileDrop.ondragover  = e =&gt; { e.preventDefault(); fileDrop.style.borderColor = '#4a6cf7'; };</span>
+<span class="s1">fileDrop.ondragleave = () =&gt; fileDrop.style.borderColor = '';</span>
+<span class="s1">fileDrop.ondrop = e =&gt; {</span>
+  <span class="s1">e.preventDefault(); fileDrop.style.borderColor = '';</span>
+  <span class="s1">if(e.dataTransfer.files[0]) readTextFile(e.dataTransfer.files[0]);</span>
+<span class="s1">};</span>
+<span class="s1">function readTextFile(file){</span>
+  <span class="s1">const r = new FileReader();</span>
+  <span class="s1">r.onload = () =&gt; {</span>
+    <span class="s1">const editor = $('inpText');</span>
+    <span class="s1">editor.innerText = r.result;</span>
+    <span class="s1">fileDrop.innerHTML = `✅ Загружен: &lt;b&gt;${esc(file.name)}&lt;/b&gt;`;</span>
+  <span class="s1">};</span>
+  <span class="s1">r.readAsText(file, 'UTF-8');</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">15. ФОТО → ТЕКСТ (улучшенный, с предобработкой)</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const photoInput = $('photoInput'), photoDrop = $('photoDrop');</span>
+<span class="s1">let photoFile = null;</span>
+
+<span class="s1">photoDrop.onclick = () =&gt; photoInput.click();</span>
+<span class="s1">photoDrop.ondragover  = e =&gt; { e.preventDefault(); photoDrop.style.borderColor='#4a6cf7'; };</span>
+<span class="s1">photoDrop.ondragleave = () =&gt; photoDrop.style.borderColor='';</span>
+<span class="s1">photoDrop.ondrop = e =&gt; {</span>
+  <span class="s1">e.preventDefault(); photoDrop.style.borderColor='';</span>
+  <span class="s1">if(e.dataTransfer.files[0]) loadPhoto(e.dataTransfer.files[0]);</span>
+<span class="s1">};</span>
+<span class="s1">photoInput.onchange = e =&gt; e.target.files[0] &amp;&amp; loadPhoto(e.target.files[0]);</span>
+
+<span class="s1">function loadPhoto(file){</span>
+  <span class="s1">photoFile = file;</span>
+  <span class="s1">const prev = $('photoPreview');</span>
+  <span class="s1">prev.src = URL.createObjectURL(file);</span>
+  <span class="s1">prev.style.display = 'block';</span>
+  <span class="s1">$('ocrBtn').disabled = false;</span>
+  <span class="s1">$('ocrStatus').textContent = `Файл: ${file.name} (${(file.size/1024).toFixed(0)} КБ)`;</span>
+<span class="s1">}</span>
+
+<span class="s1">/* Предобработка: серый + контраст + ч/б + 2x масштаб */</span>
+<span class="s1">async function preprocessImage(file, opts = {}){</span>
+  <span class="s1">const scale = opts.scale || 2;</span>
+  <span class="s1">const contrast = opts.contrast || 1.6;</span>
+  <span class="s1">const doThreshold = opts.threshold !== false;</span>
+
+  <span class="s1">return new Promise(resolve =&gt; {</span>
+    <span class="s1">const img = new Image();</span>
+    <span class="s1">img.onload = () =&gt; {</span>
+      <span class="s1">const c = document.createElement('canvas');</span>
+      <span class="s1">c.width  = img.width  * scale;</span>
+      <span class="s1">c.height = img.height * scale;</span>
+      <span class="s1">const ctx = c.getContext('2d');</span>
+      <span class="s1">ctx.imageSmoothingEnabled = true;</span>
+      <span class="s1">ctx.imageSmoothingQuality = 'high';</span>
+      <span class="s1">ctx.drawImage(img, 0, 0, c.width, c.height);</span>
+
+      <span class="s1">const imageData = ctx.getImageData(0, 0, c.width, c.height);</span>
+      <span class="s1">const d = imageData.data;</span>
+      <span class="s1">for(let i = 0; i &lt; d.length; i += 4){</span>
+        <span class="s1">let g = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];</span>
+        <span class="s1">g = Math.min(255, Math.max(0, (g - 128) * contrast + 128));</span>
+        <span class="s1">if(doThreshold) g = g &gt; 140 ? 255 : 0;</span>
+        <span class="s1">d[i] = d[i+1] = d[i+2] = g;</span>
+      <span class="s1">}</span>
+      <span class="s1">ctx.putImageData(imageData, 0, 0);</span>
+      <span class="s1">c.toBlob(b =&gt; resolve(b), 'image/png');</span>
+    <span class="s1">};</span>
+    <span class="s1">img.src = URL.createObjectURL(file);</span>
+  <span class="s1">});</span>
+<span class="s1">}</span>
+
+<span class="s1">/* OCR через Tesseract — печатный */</span>
+<span class="s1">async function ocrTesseract(blobOrFile, onProgress){</span>
+  <span class="s1">const worker = await Tesseract.createWorker(['rus','eng'], 1, {</span>
+    <span class="s1">logger: m =&gt; onProgress &amp;&amp; onProgress(m)</span>
+  <span class="s1">});</span>
+  <span class="s1">// PSM 6 — единый блок текста; PSM 1 — авто; для рукописи хуже, но хоть что-то</span>
+  <span class="s1">try {</span>
+    <span class="s1">await worker.setParameters({</span>
+      <span class="s1">tessedit_pageseg_mode: '1',</span>
+      <span class="s1">preserve_interword_spaces: '1'</span>
+    <span class="s1">});</span>
+  <span class="s1">} catch(_){}</span>
+  <span class="s1">const { data: { text } } = await worker.recognize(blobOrFile);</span>
+  <span class="s1">await worker.terminate();</span>
+  <span class="s1">return text;</span>
+<span class="s1">}</span>
+
+<span class="s1">/* OCR через TrOCR — рукописный (нейросеть) */</span>
+<span class="s1">async function ocrTrOCR(file, onProgress){</span>
+  <span class="s1">const pipeline = await window.__transformersReady;</span>
+  <span class="s1">onProgress &amp;&amp; onProgress('Загрузка модели TrOCR (может занять минуту)…');</span>
+
+  <span class="s1">const ocr = await pipeline('image-to-text', 'Xenova/trocr-base-handwritten');</span>
+
+  <span class="s1">// загрузить картинку как data URL и разбить на строки (упрощённо)</span>
+  <span class="s1">const imgURL = await new Promise(res =&gt; {</span>
+    <span class="s1">const r = new FileReader();</span>
+    <span class="s1">r.onload = () =&gt; res(r.result);</span>
+    <span class="s1">r.readAsDataURL(file);</span>
+  <span class="s1">});</span>
+
+  <span class="s1">onProgress &amp;&amp; onProgress('Распознавание…');</span>
+  <span class="s1">const result = await ocr(imgURL, { max_new_tokens: 64 });</span>
+  <span class="s1">if(Array.isArray(result)) return result.map(r =&gt; r.generated_text).join('\n');</span>
+  <span class="s1">return result[0]?.generated_text || result.generated_text || '';</span>
+<span class="s1">}</span>
+
+<span class="s1">$('ocrBtn').onclick = async () =&gt; {</span>
+  <span class="s1">if(!photoFile) return;</span>
+  <span class="s1">const btn = $('ocrBtn'), bar = $('ocrProgress'),</span>
+        <span class="s1">barInner = bar.firstElementChild, status = $('ocrStatus');</span>
+  <span class="s1">const mode = $('ocrMode').value;</span>
+  <span class="s1">const doPre = $('ocrPreproc').checked;</span>
+
+  <span class="s1">btn.disabled = true;</span>
+  <span class="s1">bar.style.display = 'block'; barInner.style.width='0%';</span>
+  <span class="s1">status.textContent = 'Подготовка…';</span>
+
+  <span class="s1">try {</span>
+    <span class="s1">let fileToRead = photoFile;</span>
+    <span class="s1">if(doPre){</span>
+      <span class="s1">status.textContent = 'Предобработка изображения…';</span>
+      <span class="s1">fileToRead = await preprocessImage(photoFile, { scale:2, contrast:1.7, threshold:true });</span>
+    <span class="s1">}</span>
+
+    <span class="s1">let text = '';</span>
+    <span class="s1">if(mode === 'handwritten'){</span>
+      <span class="s1">text = await ocrTrOCR(fileToRead, msg =&gt; status.textContent = msg);</span>
+    <span class="s1">} else {</span>
+      <span class="s1">text = await ocrTesseract(fileToRead, m =&gt; {</span>
+        <span class="s1">if(m.status === 'recognizing text'){</span>
+          <span class="s1">barInner.style.width = Math.round(m.progress*100) + '%';</span>
+          <span class="s1">status.textContent = `Распознавание… ${Math.round(m.progress*100)}%`;</span>
+        <span class="s1">} else status.textContent = m.status + '…';</span>
+      <span class="s1">});</span>
+    <span class="s1">}</span>
+
+    <span class="s1">const clean = text.replace(/\n{3,}/g,'\n\n').trim();</span>
+    <span class="s1">if(clean){</span>
+      <span class="s1">const editor = $('inpText');</span>
+      <span class="s1">const prefix = editor.innerText.trim() ? '&lt;p&gt;&lt;br&gt;&lt;/p&gt;' : '';</span>
+      <span class="s1">editor.innerHTML += prefix + clean.split('\n').map(l =&gt; `&lt;div&gt;${esc(l)||'&lt;br&gt;'}&lt;/div&gt;`).join('');</span>
+      <span class="s1">status.textContent = `✅ Распознано символов: ${clean.length}`;</span>
+    <span class="s1">} else {</span>
+      <span class="s1">status.textContent = '⚠️ Текст не найден. Попробуйте другое фото.';</span>
+    <span class="s1">}</span>
+    <span class="s1">barInner.style.width = '100%';</span>
+    <span class="s1">bubbleSay(mode === 'handwritten' ? 'Рукопись распознана! ✍️' : 'Готово! 🎉');</span>
+
+  <span class="s1">} catch(err){</span>
+    <span class="s1">status.textContent = '❌ Ошибка: ' + err.message;</span>
+  <span class="s1">} finally {</span>
+    <span class="s1">btn.disabled = false;</span>
+  <span class="s1">}</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">16. АУДИО → ТЕКСТ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">const SR = window.SpeechRecognition || window.webkitSpeechRecognition;</span>
+<span class="s1">let recognition = null, recording = false;</span>
+<span class="s1">const recBtn = $('recBtn'), interimBox = $('interim');</span>
+
+<span class="s1">function stopRecognition(){</span>
+  <span class="s1">if(recognition &amp;&amp; recording){</span>
+    <span class="s1">recording = false;</span>
+    <span class="s1">try { recognition.stop(); } catch(_){}</span>
+    <span class="s1">recBtn.classList.remove('recording');</span>
+    <span class="s1">recBtn.textContent = '🎙️ Записать с микрофона';</span>
+    <span class="s1">interimBox.textContent = '';</span>
+  <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">recBtn.onclick = () =&gt; {</span>
+  <span class="s1">if(!SR) return alert('Браузер не поддерживает распознавание речи. Используйте Chrome/Edge.');</span>
+  <span class="s1">if(recording){ stopRecognition(); return; }</span>
+
+  <span class="s1">recognition = new SR();</span>
+  <span class="s1">recognition.lang = 'ru-RU';</span>
+  <span class="s1">recognition.continuous = true;</span>
+  <span class="s1">recognition.interimResults = true;</span>
+
+  <span class="s1">recognition.onresult = e =&gt; {</span>
+    <span class="s1">let fin = '', int = '';</span>
+    <span class="s1">for(let i=e.resultIndex; i&lt;e.results.length; i++){</span>
+      <span class="s1">const t = e.results[i][0].transcript;</span>
+      <span class="s1">if(e.results[i].isFinal) fin += t + ' ';</span>
+      <span class="s1">else int += t;</span>
+    <span class="s1">}</span>
+    <span class="s1">if(fin){</span>
+      <span class="s1">const editor = $('inpText');</span>
+      <span class="s1">editor.innerHTML += `&lt;div&gt;${esc(fin.trim())}&lt;/div&gt;`;</span>
+    <span class="s1">}</span>
+    <span class="s1">interimBox.textContent = int;</span>
+  <span class="s1">};</span>
+  <span class="s1">recognition.onerror = e =&gt; { interimBox.textContent = 'Ошибка: ' + e.error; stopRecognition(); };</span>
+  <span class="s1">recognition.onend   = () =&gt; { if(recording){ try{ recognition.start(); }catch(_){} } };</span>
+
+  <span class="s1">recognition.start();</span>
+  <span class="s1">recording = true;</span>
+  <span class="s1">recBtn.classList.add('recording');</span>
+  <span class="s1">recBtn.textContent = '⏹ Остановить запись';</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ---- Загрузка аудиофайла + Whisper ---- */</span>
+<span class="s1">$('audioFileBtn').onclick = () =&gt; $('audioFileInput').click();</span>
+
+<span class="s1">$('audioFileInput').onchange = async e =&gt; {</span>
+  <span class="s1">const f = e.target.files[0]; if(!f) return;</span>
+  <span class="s1">const bar = $('whisperProgress'), barInner = bar.firstElementChild;</span>
+  <span class="s1">const status = $('audioStatus');</span>
+  <span class="s1">const modelName = $('whisperModel').value;</span>
+
+  <span class="s1">bar.style.display = 'block'; barInner.style.width = '10%';</span>
+  <span class="s1">status.textContent = 'Декодирование аудио…';</span>
+
+  <span class="s1">try {</span>
+    <span class="s1">const pipeline = await window.__transformersReady;</span>
+
+    <span class="s1">status.textContent = `Загрузка Whisper (${modelName})… первый раз долго`;</span>
+    <span class="s1">barInner.style.width = '25%';</span>
+
+    <span class="s1">const transcriber = await pipeline(</span>
+      <span class="s1">'automatic-speech-recognition',</span>
+      <span class="s1">modelName,</span>
+      <span class="s1">{ progress_callback: p =&gt; {</span>
+        <span class="s1">if(p.status === 'progress' &amp;&amp; p.progress){</span>
+          <span class="s1">barInner.style.width = Math.round(p.progress) + '%';</span>
+          <span class="s1">status.textContent = `Скачивание модели: ${Math.round(p.progress)}%`;</span>
+        <span class="s1">}</span>
+      <span class="s1">}}</span>
+    <span class="s1">);</span>
+
+    <span class="s1">status.textContent = 'Декодирование аудио (Whisper ждёт 16 kHz mono)…';</span>
+    <span class="s1">const audioBuffer = await decodeAudioToMono16k(f);</span>
+
+    <span class="s1">status.textContent = 'Распознавание речи…';</span>
+    <span class="s1">barInner.style.width = '60%';</span>
+
+    <span class="s1">const output = await transcriber(audioBuffer, {</span>
+      <span class="s1">language: 'russian',</span>
+      <span class="s1">task: 'transcribe',</span>
+      <span class="s1">chunk_length_s: 30,</span>
+      <span class="s1">stride_length_s: 5</span>
+    <span class="s1">});</span>
+
+    <span class="s1">const text = (output.text || '').trim();</span>
+    <span class="s1">if(text){</span>
+      <span class="s1">const editor = $('inpText');</span>
+      <span class="s1">const prefix = editor.innerText.trim() ? '&lt;p&gt;&lt;br&gt;&lt;/p&gt;' : '';</span>
+      <span class="s1">editor.innerHTML += prefix + text.split(/[.!?]\s+/).filter(Boolean)</span>
+        <span class="s1">.map(s =&gt; `&lt;div&gt;${esc(s.trim())}.&lt;/div&gt;`).join('');</span>
+      <span class="s1">status.textContent = `✅ Готово! Символов: ${text.length}`;</span>
+      <span class="s1">bubbleSay('Речь распознана! 🎙️');</span>
+    <span class="s1">} else {</span>
+      <span class="s1">status.textContent = '⚠️ Речь не обнаружена';</span>
+    <span class="s1">}</span>
+    <span class="s1">barInner.style.width = '100%';</span>
+  <span class="s1">} catch(err){</span>
+    <span class="s1">status.textContent = '❌ Ошибка: ' + err.message;</span>
+    <span class="s1">console.error(err);</span>
+  <span class="s1">}</span>
+<span class="s1">};</span>
+
+<span class="s1">/* Декодировать аудиофайл в Float32Array 16kHz mono */</span>
+<span class="s1">async function decodeAudioToMono16k(file){</span>
+  <span class="s1">const arrayBuffer = await file.arrayBuffer();</span>
+  <span class="s1">const AC = window.AudioContext || window.webkitAudioContext;</span>
+  <span class="s1">const ctx = new AC({ sampleRate: 16000 });</span>
+  <span class="s1">const buf = await ctx.decodeAudioData(arrayBuffer.slice(0));</span>
+  <span class="s1">// если stereo — усреднить</span>
+  <span class="s1">if(buf.numberOfChannels &gt; 1){</span>
+    <span class="s1">const L = buf.getChannelData(0);</span>
+    <span class="s1">const R = buf.getChannelData(1);</span>
+    <span class="s1">const out = new Float32Array(L.length);</span>
+    <span class="s1">for(let i=0;i&lt;L.length;i++) out[i] = (L[i] + R[i]) / 2;</span>
+    <span class="s1">return out;</span>
+  <span class="s1">}</span>
+  <span class="s1">return buf.getChannelData(0);</span>
+<span class="s1">}</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">17. СОХРАНЕНИЕ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">$('saveBtn').onclick = () =&gt; {</span>
+  <span class="s1">const cls   = $('selClass').value;</span>
+  <span class="s1">const subj  = $('inpSubject').value.trim();</span>
+  <span class="s1">const topic = $('inpTopic').value.trim();</span>
+  <span class="s1">const title = $('inpTitle').value.trim() || 'Без названия';</span>
+  <span class="s1">const editor = $('inpText');</span>
+  <span class="s1">const textHTML = sanitizeHTML(editor.innerHTML.trim());</span>
+  <span class="s1">const textPlain = editor.innerText.trim();</span>
+  <span class="s1">const image = board.toDataURL();</span>
+
+  <span class="s1">const rest = $('tagInput').value.trim().replace(/^#/,'').toLowerCase();</span>
+  <span class="s1">if(rest &amp;&amp; !pendingTags.includes(rest)) pendingTags.push(rest);</span>
+
+  <span class="s1">if(!subj || !topic) return alert('Заполните предмет и тему');</span>
+  <span class="s1">if(!textPlain &amp;&amp; !image) return alert('Конспект пуст: нет ни текста, ни рисунка');</span>
+
+  <span class="s1">DB[cls] ??= {};</span>
+  <span class="s1">DB[cls][subj] ??= {};</span>
+  <span class="s1">DB[cls][subj][topic] ??= [];</span>
+  <span class="s1">DB[cls][subj][topic].push({</span>
+    <span class="s1">id: Date.now(), title, text: textHTML, image,</span>
+    <span class="s1">tags: [...pendingTags], fav: false,</span>
+    <span class="s1">date: new Date().toISOString()</span>
+  <span class="s1">});</span>
+
+  <span class="s1">saveDB();</span>
+  <span class="s1">cur = {...cur, cls, subj, topic, view:'notes', favOnly:false};</span>
+  <span class="s1">stopRecognition();</span>
+  <span class="s1">closeModal();</span>
+  <span class="s1">renderAll();</span>
+  <span class="s1">bubbleSay('Конспект сохранён! 💾');</span>
+<span class="s1">};</span>
+
+<span class="s1">/* ============================================================</span>
+   <span class="s1">18. СТАРТ</span>
+   <span class="s1">============================================================ */</span>
+<span class="s1">(function boot(){</span>
+  <span class="s1">const session = localStorage.getItem(SESSION_KEY);</span>
+  <span class="s1">if(session &amp;&amp; loadUsers()[session]) startSession(session);</span>
+<span class="s1">})();</span>
+
+<span class="s1">window.addEventListener('resize', () =&gt; {</span>
+  <span class="s1">if(cur.view === 'graph' &amp;&amp; graphState) initGraph();</span>
+<span class="s1">});</span>
+<span class="s0">&lt;/script&gt;</span>
+<span class="s0">&lt;/body&gt;</span>
+<span class="s0">&lt;/html&gt;</span></pre>
+</body>
+</html>
